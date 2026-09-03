@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro de Pedidos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0284c7;
+            --primary-hover: #0369a1;
+            --bg-color: #f0fdf4;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f8fafc; color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .container { width: 100%; max-width: 650px; background: var(--card-bg); padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: #1e293b; }
+        .header p { font-size: 14px; color: var(--text-muted); }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select { width: 100%; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; background: #fff; }
+        input:focus, select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
+        .file-drop-area { border: 2px dashed var(--border-color); border-radius: 8px; padding: 20px; text-align: center; position: relative; background: #f8fafc; }
+        input[type="file"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .file-name { margin-top: 6px; font-size: 13px; font-weight: 500; color: var(--primary-color); }
+        .btn-submit { width: 100%; background-color: var(--primary-color); color: white; border: none; padding: 14px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+        .btn-submit:hover { background-color: var(--primary-hover); }
+        .btn-submit:disabled { background-color: var(--border-color); cursor: not-allowed; }
+        .alert { padding: 12px 16px; border-radius: 8px; font-size: 14px; margin-bottom: 20px; display: none; }
+        .alert-error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+        .alert-success { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Registro de Alumnos y Documentación</h1>
+            <p>Complete sus datos institucionales y adjunte el archivo correspondiente en PDF.</p>
+        </div>
+
+        <div id="alertBox" class="alert"></div>
+
+        <form id="registroForm">
+            <div class="form-group">
+                <label for="dni">DNI (8 dígitos exactos)</label>
+                <input type="text" id="dni" name="dni" required maxlength="8" pattern="\d{8}" placeholder="Ej: 35123456">
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" required placeholder="Ej: González">
+            </div>
+
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Ej: María Sofía">
+            </div>
+
+            <div class="form-group">
+                <label for="sede">Sede</label>
+                <select id="sede" name="sede" required>
+                    <option value="">Seleccione una sede...</option>
+                    <option value="Central">Central</option>
+                    <option value="Uspallata">Uspallata</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="carrera">Carrera</label>
+                <select id="carrera" name="carrera" required>
+                    <option value="">Seleccione una carrera...</option>
+                    <option value="Tecnicatura en Informatica">Tecnicatura en Informática</option>
+                    <option value="Administracion">Administración</option>
+                    <option value="Enfermeria">Enfermería</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Archivo Adjunto (Solo PDF, máx. 8 MB)</label>
+                <div class="file-drop-area">
+                    <span id="dropMsg">Haga clic o arrastre su archivo PDF aquí</span>
+                    <input type="file" id="archivoPDF" name="archivoPDF" accept="application/pdf" required>
+                </div>
+                <div id="fileInfo" class="file-name"></div>
+            </div>
+
+            <button type="submit" id="btnEnviar" class="btn-submit">Enviar Registro</button>
+        </form>
+    </div>
+
+    <script>
+        // ==============================================================================
+        // CONFIGURACIÓN DE LA URL DE IMPLEMENTACIÓN DE APPS SCRIPT
+        // (Solo requerida si alojas este HTML en GitHub Pages u otro servidor externo.
+        // Si usas Apps Script directamente con HtmlService, puedes omitir esta URL y usar google.script.run)
+        // ==============================================================================
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_Jq02pH9GluRm3JiQK3tEQCUk7v79NcdsNA-viVi3SETRe8_OqqGDtwEyQIDHUjZK/exec"; 
+
+        const form = document.getElementById('registroForm');
+        const fileInput = document.getElementById('archivoPDF');
+        const fileInfo = document.getElementById('fileInfo');
+        const alertBox = document.getElementById('alertBox');
+        const btnEnviar = document.getElementById('btnEnviar');
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 8 * 1024 * 1024) {
+                    mostrarAlerta("El archivo excede el tamaño máximo permitido de 8 MB.", "error");
+                    fileInput.value = "";
+                    fileInfo.textContent = "";
+                    return;
+                }
+                if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith('.pdf')) {
+                    mostrarAlerta("Solo se aceptan archivos con formato PDF.", "error");
+                    fileInput.value = "";
+                    fileInfo.textContent = "";
+                    return;
+                }
+                ocultarAlerta();
+                fileInfo.textContent = `Archivo cargado: ${file.name} (${(file.size / (1024*1024)).toFixed(2)} MB)`;
+            }
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            ocultarAlerta();
+
+            const dni = document.getElementById('dni').value.trim();
+            if (!/^\d{8}$/.test(dni)) {
+                mostrarAlerta("El DNI debe contener exactamente 8 números.", "error");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            if (!file) {
+                mostrarAlerta("Debe adjuntar obligatoriamente un archivo PDF.", "error");
+                return;
+            }
+
+            btnEnviar.disabled = true;
+            btnEnviar.innerHTML = '<span class="spinner"></span> Enviando datos y archivo...';
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                const base64Data = reader.result.split(',')[1];
+                const payload = {
+                    dni: dni,
+                    apellido: document.getElementById('apellido').value.trim(),
+                    nombre: document.getElementById('nombre').value.trim(),
+                    sede: document.getElementById('sede').value.trim(),
+                    carrera: document.getElementById('carrera').value.trim(),
+                    archivo: {
+                        base64: base64Data,
+                        nombre: file.name,
+                        tipo: file.type
+                    }
+                };
+
+                // Si se ejecuta de forma nativa dentro de Google Apps Script:
+                if (typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run
+                        .withSuccessHandler(onSuccess)
+                        .withFailureHandler(onFailure)
+                        .procesarFormulario(payload);
+                } else {
+                    // Si se aloja en GitHub u otro hosting externo usando la URL de Web App:
+                    fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors', // O 'cors' si está configurado en Apps Script
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(() => {
+                        onSuccess({ success: true, message: "¡Registro enviado con éxito!" });
+                    })
+                    .catch(error => {
+                        onFailure(error);
+                    });
+                }
+            };
+            reader.onerror = function () {
+                mostrarAlerta("Error al leer el archivo en el navegador.", "error");
+                restaurarBoton();
+            };
+        });
+
+        function onSuccess(response) {
+            if (response.success) {
+                mostrarAlerta(response.message, "success");
+                form.reset();
+                fileInfo.textContent = "";
+            } else {
+                mostrarAlerta(response.message, "error");
+            }
+            restaurarBoton();
+        }
+
+        function onFailure(error) {
+            mostrarAlerta("Error de comunicación: " + (error.message || error), "error");
+            restaurarBoton();
+        }
+
+        function restaurarBoton() {
+            btnEnviar.disabled = false;
+            btnEnviar.textContent = "Enviar Registro";
+        }
+
+        function mostrarAlerta(mensaje, tipo) {
+            alertBox.textContent = mensaje;
+            alertBox.style.display = "block";
+            alertBox.className = tipo === "error" ? "alert alert-error" : "alert alert-success";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function ocultarAlerta() {
+            alertBox.style.display = "none";
+        }
+    </script>
+</body>
+</html>

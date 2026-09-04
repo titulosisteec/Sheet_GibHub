@@ -3,106 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Registro de Pedidos</title>
+    <title>Portal Institucional - Inscripciones</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0284c7;
-            --primary-hover: #0369a1;
-            --bg-color: #f0fdf4;
+            --primary: #1e3a8a;
+            --primary-hover: #1e40af;
+            --accent: #3b82f6;
+            --bg-body: #f1f5f9;
             --card-bg: #ffffff;
             --text-main: #0f172a;
-            --text-muted: #475569;
-            --border-color: #cbd5e1;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: #f8fafc; color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .container { width: 100%; max-width: 650px; background: var(--card-bg); padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: #1e293b; }
-        .header p { font-size: 14px; color: var(--text-muted); }
-        .form-group { margin-bottom: 18px; }
-        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select { width: 100%; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; background: #fff; }
-        input:focus, select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
-        .file-drop-area { border: 2px dashed var(--border-color); border-radius: 8px; padding: 20px; text-align: center; position: relative; background: #f8fafc; }
+        
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+            display: flex;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar h2 { font-size: 26px; font-weight: 700; margin-bottom: 15px; line-height: 1.2; }
+        .sidebar p { font-size: 14px; opacity: 0.9; line-height: 1.6; }
+        .sidebar-footer { font-size: 12px; opacity: 0.7; margin-top: 30px; }
+
+        .form-container {
+            flex: 1.3;
+            padding: 40px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-container h3 { font-size: 20px; font-weight: 600; color: var(--text-main); margin-bottom: 20px; }
+        .form-group { margin-bottom: 16px; }
+        .form-row { display: flex; gap: 12px; }
+        .form-row .form-group { flex: 1; }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .file-drop-area {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .file-drop-area:hover { background: #f1f5f9; }
         input[type="file"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-        .file-name { margin-top: 6px; font-size: 13px; font-weight: 500; color: var(--primary-color); }
-        .btn-submit { width: 100%; background-color: var(--primary-color); color: white; border: none; padding: 14px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+        .file-name { margin-top: 6px; font-size: 12px; font-weight: 500; color: var(--accent); }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
         .btn-submit:hover { background-color: var(--primary-hover); }
-        .btn-submit:disabled { background-color: var(--border-color); cursor: not-allowed; }
-        .alert { padding: 12px 16px; border-radius: 8px; font-size: 14px; margin-bottom: 20px; display: none; }
+        .btn-submit:disabled { background-color: var(--border); cursor: not-allowed; }
+
+        .alert { padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; display: none; }
         .alert-error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
         .alert-success { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
-        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
+
+        .spinner {
+            display: inline-block; width: 14px; height: 14px;
+            border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff;
+            animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle;
+        }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .wrapper { flex-direction: column; }
+            .sidebar { padding: 25px; }
+            .form-container { padding: 25px; max-height: none; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header">
-            <h1>Registro de Alumnos y Documentación</h1>
-            <p>Complete sus datos institucionales y adjunte el archivo correspondiente en PDF.</p>
+    <div class="wrapper">
+        <div class="sidebar">
+            <div>
+                <h2>Portal de Ingresantes</h2>
+                <p>Complete el formulario oficial de inscripción y adjunte la documentación respaldatoria en formato PDF.</p>
+            </div>
+            <div class="sidebar-footer">Sistema Académico Institucional &copy; 2026</div>
         </div>
 
-        <div id="alertBox" class="alert"></div>
+        <div class="form-container">
+            <h3>Registro de Datos</h3>
+            <div id="alertBox" class="alert"></div>
 
-        <form id="registroForm">
-            <div class="form-group">
-                <label for="dni">DNI (8 dígitos exactos)</label>
-                <input type="text" id="dni" name="dni" required maxlength="8" pattern="\d{8}" placeholder="Ej: 35123456">
-            </div>
-
-            <div class="form-group">
-                <label for="apellido">Apellido</label>
-                <input type="text" id="apellido" name="apellido" required placeholder="Ej: González">
-            </div>
-
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Ej: María Sofía">
-            </div>
-
-            <div class="form-group">
-                <label for="sede">Sede</label>
-                <select id="sede" name="sede" required>
-                    <option value="">Seleccione una sede...</option>
-                    <option value="Central">Central</option>
-                    <option value="Uspallata">Uspallata</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="carrera">Carrera</label>
-                <select id="carrera" name="carrera" required>
-                    <option value="">Seleccione una carrera...</option>
-                    <option value="Tecnicatura en Informatica">Tecnicatura en Informática</option>
-                    <option value="Administracion">Administración</option>
-                    <option value="Enfermeria">Enfermería</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Archivo Adjunto (Solo PDF, máx. 8 MB)</label>
-                <div class="file-drop-area">
-                    <span id="dropMsg">Haga clic o arrastre su archivo PDF aquí</span>
-                    <input type="file" id="archivoPDF" name="archivoPDF" accept="application/pdf" required>
+            <form id="registroForm">
+                <div class="form-group">
+                    <label for="dni">DNI (8 dígitos exactos)</label>
+                    <input type="text" id="dni" name="dni" required maxlength="8" pattern="\d{8}" placeholder="Ej: 35123456">
                 </div>
-                <div id="fileInfo" class="file-name"></div>
-            </div>
 
-            <button type="submit" id="btnEnviar" class="btn-submit">Enviar Registro</button>
-        </form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" required placeholder="Ej: González">
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required placeholder="Ej: María Sofía">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sede">Sede</label>
+                        <select id="sede" name="sede" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Central">Central</option>
+                            <option value="Uspallata">Uspallata</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="carrera">Carrera</label>
+                        <select id="carrera" name="carrera" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Tecnicatura en Informatica">Tecnicatura en Informática</option>
+                            <option value="Administracion">Administración</option>
+                            <option value="Enfermeria">Enfermería</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Documento Adjunto (Solo PDF, máx. 8 MB)</label>
+                    <div class="file-drop-area">
+                        <span id="dropMsg" style="font-size: 13px; color: var(--text-muted);">Haga clic o arrastre su PDF aquí</span>
+                        <input type="file" id="archivoPDF" name="archivoPDF" accept="application/pdf" required>
+                    </div>
+                    <div id="fileInfo" class="file-name"></div>
+                </div>
+
+                <button type="submit" id="btnEnviar" class="btn-submit">Enviar Inscripción</button>
+            </form>
+        </div>
     </div>
 
     <script>
         // ==============================================================================
-        // CONFIGURACIÓN DE LA URL DE IMPLEMENTACIÓN DE APPS SCRIPT
-        // (Solo requerida si alojas este HTML en GitHub Pages u otro servidor externo.
-        // Si usas Apps Script directamente con HtmlService, puedes omitir esta URL y usar google.script.run)
+        // PEGA AQUÍ LA URL COMPLETA DE TU IMPLEMENTACIÓN DE APPS SCRIPT (terminada en /exec)
         // ==============================================================================
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_Jq02pH9GluRm3JiQK3tEQCUk7v79NcdsNA-viVi3SETRe8_OqqGDtwEyQIDHUjZK/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT9mGeaP0hOmH3a6pLI8S0yLLUK5L2BY2tzM0puxIexkFWIWPbIJqIWXpqapWHh-0q/exec";
 
         const form = document.getElementById('registroForm');
         const fileInput = document.getElementById('archivoPDF');
@@ -120,7 +228,7 @@
                     return;
                 }
                 if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith('.pdf')) {
-                    mostrarAlerta("Solo se aceptan archivos con formato PDF.", "error");
+                    mostrarAlerta("Solo se aceptan archivos en formato PDF.", "error");
                     fileInput.value = "";
                     fileInfo.textContent = "";
                     return;
@@ -147,7 +255,7 @@
             }
 
             btnEnviar.disabled = true;
-            btnEnviar.innerHTML = '<span class="spinner"></span> Enviando datos y archivo...';
+            btnEnviar.innerHTML = '<span class="spinner"></span> Procesando envío...';
 
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -166,27 +274,30 @@
                     }
                 };
 
-                // Si se ejecuta de forma nativa dentro de Google Apps Script:
-                if (typeof google !== 'undefined' && google.script && google.script.run) {
-                    google.script.run
-                        .withSuccessHandler(onSuccess)
-                        .withFailureHandler(onFailure)
-                        .procesarFormulario(payload);
-                } else {
-                    // Si se aloja en GitHub u otro hosting externo usando la URL de Web App:
-                    fetch(SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors', // O 'cors' si está configurado en Apps Script
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                        body: JSON.stringify(payload)
-                    })
-                    .then(() => {
-                        onSuccess({ success: true, message: "¡Registro enviado con éxito!" });
-                    })
-                    .catch(error => {
-                        onFailure(error);
-                    });
-                }
+                // Petición POST segura mediante Fetch hacia Apps Script
+                fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors', // Permite recibir la respuesta correctamente
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8',
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        mostrarAlerta(result.message, "success");
+                        form.reset();
+                        fileInfo.textContent = "";
+                    } else {
+                        mostrarAlerta(result.message, "error");
+                    }
+                    restaurarBoton();
+                })
+                .catch(error => {
+                    mostrarAlerta("Error de conexión con el servidor. Verifique su red.", "error");
+                    restaurarBoton();
+                });
             };
             reader.onerror = function () {
                 mostrarAlerta("Error al leer el archivo en el navegador.", "error");
@@ -194,25 +305,9 @@
             };
         });
 
-        function onSuccess(response) {
-            if (response.success) {
-                mostrarAlerta(response.message, "success");
-                form.reset();
-                fileInfo.textContent = "";
-            } else {
-                mostrarAlerta(response.message, "error");
-            }
-            restaurarBoton();
-        }
-
-        function onFailure(error) {
-            mostrarAlerta("Error de comunicación: " + (error.message || error), "error");
-            restaurarBoton();
-        }
-
         function restaurarBoton() {
             btnEnviar.disabled = false;
-            btnEnviar.textContent = "Enviar Registro";
+            btnEnviar.textContent = "Enviar Inscripción";
         }
 
         function mostrarAlerta(mensaje, tipo) {

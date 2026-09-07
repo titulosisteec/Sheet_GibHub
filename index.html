@@ -218,6 +218,18 @@
         const alertBox = document.getElementById('alertBox');
         const btnEnviar = document.getElementById('btnEnviar');
 
+        // Forzar mayúsculas en tiempo real para Apellido y Nombre
+    const inputApellido = document.getElementById('apellido');
+    const inputNombre = document.getElementById('nombre');
+
+    inputApellido.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+    });
+
+    inputNombre.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+    });
+
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {

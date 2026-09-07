@@ -206,9 +206,9 @@
         </div>
     </div>
 
-    <script>
+   <script>
         // ==============================================================================
-        // PEGA AQUÍ LA URL COMPLETA DE TU IMPLEMENTACIÓN DE APPS SCRIPT (terminada en /exec)
+        // URL DE TU IMPLEMENTACIÓN DE APPS SCRIPT
         // ==============================================================================
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT9mGeaP0hOmH3a6pLI8S0yLLUK5L2BY2tzM0puxIexkFWIWPbIJqIWXpqapWHh-0q/exec";
 
@@ -218,41 +218,21 @@
         const alertBox = document.getElementById('alertBox');
         const btnEnviar = document.getElementById('btnEnviar');
 
-   const form = document.getElementById('registroForm');
-        const fileInput = document.getElementById('archivoPDF');
-        const fileInfo = document.getElementById('fileInfo');
-        const alertBox = document.getElementById('alertBox');
-        const btnEnviar = document.getElementById('btnEnviar');
+        // Conversión a Mayúsculas al salir del campo (Blur)
+        const inputApellido = document.getElementById('apellido');
+        const inputNombre = document.getElementById('nombre');
 
-    // CONVERTIR A MAYÚSCULAS AL SALIR DEL CAMPO (BLUR)
-        document.addEventListener("DOMContentLoaded", function() {
-            const inputApellido = document.getElementById('apellido');
-            const inputNombre = document.getElementById('nombre');
+        if (inputApellido) {
+            inputApellido.addEventListener('blur', function() {
+                this.value = this.value.toUpperCase();
+            });
+        }
 
-            if (inputApellido) {
-                inputApellido.addEventListener('blur', function() {
-                    this.value = this.value.toUpperCase();
-                });
-            }
-
-            if (inputApellido) {
-                inputApellido.addEventListener('change', function() {
-                    this.value = this.value.toUpperCase();
-                });
-            }
-
-            if (inputNombre) {
-                inputNombre.addEventListener('blur', function() {
-                    this.value = this.value.toUpperCase();
-                });
-            }
-
-            if (inputNombre) {
-                inputNombre.addEventListener('change', function() {
-                    this.value = this.value.toUpperCase();
-                });
-            }
-        });
+        if (inputNombre) {
+            inputNombre.addEventListener('blur', function() {
+                this.value = this.value.toUpperCase();
+            });
+        }
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -310,10 +290,9 @@
                     }
                 };
 
-                // Petición POST segura mediante Fetch hacia Apps Script
                 fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'cors', // Permite recibir la respuesta correctamente
+                    mode: 'cors',
                     headers: {
                         'Content-Type': 'text/plain;charset=utf-8',
                     },

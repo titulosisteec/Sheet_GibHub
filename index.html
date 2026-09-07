@@ -218,17 +218,27 @@
         const alertBox = document.getElementById('alertBox');
         const btnEnviar = document.getElementById('btnEnviar');
 
-        // Forzar mayúsculas en tiempo real para Apellido y Nombre
-    const inputApellido = document.getElementById('apellido');
-    const inputNombre = document.getElementById('nombre');
+   const form = document.getElementById('registroForm');
+        const fileInput = document.getElementById('archivoPDF');
+        const fileInfo = document.getElementById('fileInfo');
+        const alertBox = document.getElementById('alertBox');
+        const btnEnviar = document.getElementById('btnEnviar');
 
-    inputApellido.addEventListener('input', function() {
-        this.value = this.value.toUpperCase();
-    });
+        // FORZAR MAYÚSCULAS EN TIEMPO REAL
+        const inputApellido = document.getElementById('apellido');
+        const inputNombre = document.getElementById('nombre');
 
-    inputNombre.addEventListener('input', function() {
-        this.value = this.value.toUpperCase();
-    });
+        if (inputApellido) {
+            inputApellido.addEventListener('input', function() {
+                this.value = this.value.toUpperCase();
+            });
+        }
+
+        if (inputNombre) {
+            inputNombre.addEventListener('input', function() {
+                this.value = this.value.toUpperCase();
+            });
+        }
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];

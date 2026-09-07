@@ -224,21 +224,35 @@
         const alertBox = document.getElementById('alertBox');
         const btnEnviar = document.getElementById('btnEnviar');
 
-       // CONVERTIR A MAYÚSCULAS AL SALIR DEL CAMPO (AL PRESIONAR TAB O CAMBIAR DE FOCO)
-        const inputApellido = document.getElementById('apellido');
-        const inputNombre = document.getElementById('nombre');
+    // CONVERTIR A MAYÚSCULAS AL SALIR DEL CAMPO (BLUR)
+        document.addEventListener("DOMContentLoaded", function() {
+            const inputApellido = document.getElementById('apellido');
+            const inputNombre = document.getElementById('nombre');
 
-        if (inputApellido) {
-            inputApellido.addEventListener('blur', function() {
-                this.value = this.value.toUpperCase();
-            });
-        }
+            if (inputApellido) {
+                inputApellido.addEventListener('blur', function() {
+                    this.value = this.value.toUpperCase();
+                });
+            }
 
-        if (inputNombre) {
-            inputNombre.addEventListener('blur', function() {
-                this.value = this.value.toUpperCase();
-            });
-        }
+            if (inputApellido) {
+                inputApellido.addEventListener('change', function() {
+                    this.value = this.value.toUpperCase();
+                });
+            }
+
+            if (inputNombre) {
+                inputNombre.addEventListener('blur', function() {
+                    this.value = this.value.toUpperCase();
+                });
+            }
+
+            if (inputNombre) {
+                inputNombre.addEventListener('change', function() {
+                    this.value = this.value.toUpperCase();
+                });
+            }
+        });
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];

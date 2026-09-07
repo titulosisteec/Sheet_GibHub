@@ -224,18 +224,18 @@
         const alertBox = document.getElementById('alertBox');
         const btnEnviar = document.getElementById('btnEnviar');
 
-        // FORZAR MAYÚSCULAS EN TIEMPO REAL
+       // CONVERTIR A MAYÚSCULAS AL SALIR DEL CAMPO (AL PRESIONAR TAB O CAMBIAR DE FOCO)
         const inputApellido = document.getElementById('apellido');
         const inputNombre = document.getElementById('nombre');
 
         if (inputApellido) {
-            inputApellido.addEventListener('input', function() {
+            inputApellido.addEventListener('blur', function() {
                 this.value = this.value.toUpperCase();
             });
         }
 
         if (inputNombre) {
-            inputNombre.addEventListener('input', function() {
+            inputNombre.addEventListener('blur', function() {
                 this.value = this.value.toUpperCase();
             });
         }

@@ -302,17 +302,23 @@
                     },
                     body: JSON.stringify(payload)
                 })
-                .then(response => response.json())
+           .then(response => response.json())
                 .then(result => {
                     if (result.success) {
-                        // 2. Si es exitoso, mostramos el mensaje final de éxito del servidor
                         mostrarAlerta(result.message, "success");
                         form.reset();
                         fileInfo.textContent = "";
+
+                        // NUEVO: Ocultar el cartel de éxito automáticamente después de 5 segundos (5000 ms)
+                        setTimeout(() => {
+                            ocultarAlerta();
+                        }, 5000);
+
                     } else {
                         mostrarAlerta(result.message, "error");
                     }
                     restaurarBoton();
+                })
                 })
                 .catch(error => {
                     mostrarAlerta("Error de conexión con el servidor. Verifique su red.", "error");

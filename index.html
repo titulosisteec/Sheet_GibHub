@@ -218,23 +218,12 @@
         const alertBox = document.getElementById('alertBox');
         const btnEnviar = document.getElementById('btnEnviar');
 
-        // ==============================================================================
-        // CONVERSIÓN A MAYÚSCULAS AL SALIR DEL CAMPO (BLUR)
-        // ==============================================================================
-        const inputApellido = document.getElementById('apellido');
-        const inputNombre = document.getElementById('nombre');
-
-        if (inputApellido) {
-            inputApellido.addEventListener('blur', function() {
+   // CONVERSIÓN AUTOMÁTICA A MAYÚSCULAS PARA TODOS LOS CAMPOS DE TEXTO AL SALIR (BLUR)
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('blur', function() {
                 this.value = this.value.toUpperCase();
             });
-        }
-
-        if (inputNombre) {
-            inputNombre.addEventListener('blur', function() {
-                this.value = this.value.toUpperCase();
-            });
-        }
+        });
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];

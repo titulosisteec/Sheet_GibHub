@@ -254,7 +254,7 @@
             }
         });
 
-        form.addEventListener('submit', function(e) {
+       form.addEventListener('submit', function(e) {
             e.preventDefault();
             ocultarAlerta();
 
@@ -270,8 +270,12 @@
                 return;
             }
 
+            // 1. Deshabilitar botón y mostrar mensaje de espera inicial
             btnEnviar.disabled = true;
             btnEnviar.innerHTML = '<span class="spinner"></span> Procesando envío...';
+            
+            // NUEVO: Mostrar aviso preventivo de espera al usuario
+            mostrarAlerta("Aguarde un momento, su solicitud se está procesando...", "success");
 
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -301,6 +305,7 @@
                 .then(response => response.json())
                 .then(result => {
                     if (result.success) {
+                        // 2. Si es exitoso, mostramos el mensaje final de éxito del servidor
                         mostrarAlerta(result.message, "success");
                         form.reset();
                         fileInfo.textContent = "";
@@ -319,7 +324,6 @@
                 restaurarBoton();
             };
         });
-
         function restaurarBoton() {
             btnEnviar.disabled = false;
             btnEnviar.textContent = "Enviar Inscripción";

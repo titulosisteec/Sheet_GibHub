@@ -212,20 +212,31 @@
         // ==============================================================================
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT9mGeaP0hOmH3a6pLI8S0yLLUK5L2BY2tzM0puxIexkFWIWPbIJqIWXpqapWHh-0q/exec";
 
-     const form = document.getElementById('registroForm');
+        const form = document.getElementById('registroForm');
         const fileInput = document.getElementById('archivoPDF');
         const fileInfo = document.getElementById('fileInfo');
         const alertBox = document.getElementById('alertBox');
         const btnEnviar = document.getElementById('btnEnviar');
 
-  // ==============================================================================
-        // CONVERSIÓN A MAYÚSCULAS INFALIBLE PARA TODOS LOS TEXTOS
         // ==============================================================================
-        document.addEventListener('blur', function(e) {
-            if (e.target && e.target.tagName === 'INPUT' && e.target.type === 'text') {
-                e.target.value = e.target.value.toUpperCase();
-            }
-        }, true);
+        // CONVERSIÓN DIRECTA A MAYÚSCULAS AL SALIR DE LOS CAMPOS (BLUR Y CHANGE)
+        // ==============================================================================
+        const apellidoInput = document.getElementById('apellido');
+        const nombreInput = document.getElementById('nombre');
+
+        function convertirAMayusculas(e) {
+            e.target.value = e.target.value.toUpperCase();
+        }
+
+        if (apellidoInput) {
+            apellidoInput.addEventListener('blur', convertirAMayusculas);
+            apellidoInput.addEventListener('change', convertirAMayusculas);
+        }
+
+        if (nombreInput) {
+            nombreInput.addEventListener('blur', convertirAMayusculas);
+            nombreInput.addEventListener('change', convertirAMayusculas);
+        }
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -247,7 +258,7 @@
             }
         });
 
-       form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
             ocultarAlerta();
 
@@ -263,11 +274,9 @@
                 return;
             }
 
-            // 1. Deshabilitar botón y mostrar mensaje de espera inicial
             btnEnviar.disabled = true;
             btnEnviar.innerHTML = '<span class="spinner"></span> Procesando envío...';
             
-            // NUEVO: Mostrar aviso preventivo de espera al usuario
             mostrarAlerta("Aguarde un momento, su solicitud se está procesando...", "success");
 
             const reader = new FileReader();
@@ -295,14 +304,13 @@
                     },
                     body: JSON.stringify(payload)
                 })
-           .then(response => response.json())
+                .then(response => response.json())
                 .then(result => {
                     if (result.success) {
                         mostrarAlerta(result.message, "success");
                         form.reset();
                         fileInfo.textContent = "";
 
-                        // NUEVO: Ocultar el cartel de éxito automáticamente después de 5 segundos (5000 ms)
                         setTimeout(() => {
                             ocultarAlerta();
                         }, 5000);
@@ -311,7 +319,6 @@
                         mostrarAlerta(result.message, "error");
                     }
                     restaurarBoton();
-                })
                 })
                 .catch(error => {
                     mostrarAlerta("Error de conexión con el servidor. Verifique su red.", "error");
@@ -323,6 +330,7 @@
                 restaurarBoton();
             };
         });
+
         function restaurarBoton() {
             btnEnviar.disabled = false;
             btnEnviar.textContent = "Enviar Inscripción";

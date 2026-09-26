@@ -3,349 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Institucional - Inscripciones</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Mesa de Entradas - Sistema de Trámites Académicos</title>
+    <!-- Tailwind CSS CDN para un diseño profesional -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary: #1e3a8a;
-            --primary-hover: #1e40af;
-            --accent: #3b82f6;
-            --bg-body: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #cbd5e1;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .wrapper {
-            width: 100%;
-            max-width: 900px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
-            display: flex;
-            overflow: hidden;
-        }
-
-        .sidebar {
-            flex: 1;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .sidebar h2 { font-size: 26px; font-weight: 700; margin-bottom: 15px; line-height: 1.2; }
-        .sidebar p { font-size: 14px; opacity: 0.9; line-height: 1.6; }
-        .sidebar-footer { font-size: 12px; opacity: 0.7; margin-top: 30px; }
-
-        .form-container {
-            flex: 1.3;
-            padding: 40px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .form-container h3 { font-size: 20px; font-weight: 600; color: var(--text-main); margin-bottom: 20px; }
-        .form-group { margin-bottom: 16px; }
-        .form-row { display: flex; gap: 12px; }
-        .form-row .form-group { flex: 1; }
-
-        label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-main);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            transition: all 0.2s;
-            background: #fff;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-        }
-
-        .file-drop-area {
-            border: 2px dashed var(--border);
-            border-radius: 8px;
-            padding: 16px;
-            text-align: center;
-            position: relative;
-            background: #f8fafc;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .file-drop-area:hover { background: #f1f5f9; }
-        input[type="file"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-        .file-name { margin-top: 6px; font-size: 12px; font-weight: 500; color: var(--accent); }
-
-        .btn-submit {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 10px;
-        }
-        .btn-submit:hover { background-color: var(--primary-hover); }
-        .btn-submit:disabled { background-color: var(--border); cursor: not-allowed; }
-
-        .alert { padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; display: none; }
-        .alert-error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
-        .alert-success { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
-
-        .spinner {
-            display: inline-block; width: 14px; height: 14px;
-            border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff;
-            animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        @media (max-width: 768px) {
-            .wrapper { flex-direction: column; }
-            .sidebar { padding: 25px; }
-            .form-container { padding: 25px; max-height: none; }
-        }
+        .uppercase-input { text-transform: uppercase; }
     </style>
 </head>
-<body>
-
-    <div class="wrapper">
-        <div class="sidebar">
-            <div>
-                <h2>Portal de Ingresantes</h2>
-                <p>Complete el formulario oficial de inscripción y adjunte la documentación respaldatoria en formato PDF.</p>
+<body class="bg-gray-100 min-h-screen py-10 px-4">
+    <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Portal de Trámites Académicos</h1>
+        
+        <form id="tramiteForm" class="space-y-6">
+            <!-- Datos Personales -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">DNI (8 dígitos exactos)</label>
+                    <input type="text" id="dni" name="dni" required maxlength="8" pattern="\d{8}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                    <input type="email" id="email" name="email" required placeholder="correo@ejemplo.com" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                </div>
             </div>
-            <div class="sidebar-footer">Sistema Académico Institucional &copy; 2026</div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" required class="uppercase-input mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required class="uppercase-input mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+            </div>
+
+            <!-- Ubicación y Selección de Trámite -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Sede</label>
+                    <select id="sede" name="sede" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white">
+                        <option value="">Seleccione Sede...</option>
+                        <option value="Central">Central</option>
+                        <option value="Uspallata">Uspallata</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Tipo de Trámite</label>
+                    <select id="tipoTramite" name="tipoTramite" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white" onchange="actualizarCamposArchivos()">
+                        <option value="">Seleccione Trámite...</option>
+                        <option value="Analítico Incompleto">Analítico Incompleto</option>
+                        <option value="Analítico Completo">Analítico Completo</option>
+                        <option value="Título Digital">Título Digital</option>
+                        <option value="Certificación Profesional">Certificación Profesional</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Carreras (Dinámico o Básico) -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Carrera</label>
+                <select id="carrera" name="carrera" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white">
+                    <option value="">Seleccione Carrera...</option>
+                    <option value="Tecnicatura en Informatica">Tecnicatura en Informática</option>
+                    <option value="Administracion">Administración</option>
+                    <option value="Enfermeria">Enfermería</option>
+                </select>
+            </div>
+
+            <!-- SECCIÓN CONDICIONAL DE ARCHIVOS PDF -->
+            <div id="seccionArchivos" class="border-t border-gray-200 pt-4 space-y-4">
+                <h3 class="text-lg font-medium text-gray-900">Documentación Requerida (Solo PDF, máx. 8MB c/u)</h3>
+                <div id="inputsArchivosContainer" class="space-y-3">
+                    <!-- Se inyecta dinámicamente con JavaScript -->
+                </div>
+            </div>
+
+            <!-- Botón de Envío -->
+            <div>
+                <button type="submit" id="btnEnviar" class="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md shadow hover:bg-indigo-700 transition duration-200">
+                    Enviar Solicitud
+                </button>
+            </div>
+        </form>
+
+        <!-- Indicador de carga -->
+        <div id="loading" class="hidden mt-4 text-center text-indigo-600 font-semibold">
+            Procesando y subiendo documentación al servidor... Por favor, espere.
         </div>
-
-        <div class="form-container">
-            <h3>Registro de Datos</h3>
-            <div id="alertBox" class="alert"></div>
-
-            <form id="registroForm">
-                <div class="form-group">
-                    <label for="dni">DNI (8 dígitos exactos)</label>
-                    <input type="text" id="dni" name="dni" required maxlength="8" pattern="\d{8}" autocomplete="off"> 
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="apellido">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" required autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" required autocomplete="off">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="sede">Sede</label>
-                        <select id="sede" name="sede" required>
-                            <option value="">Seleccione...</option>
-                            <option value="Central">Central</option>
-                            <option value="Uspallata">Uspallata</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="carrera">Carrera</label>
-                        <select id="carrera" name="carrera" required>
-                            <option value="">Seleccione...</option>
-                            <option value="Tecnicatura en Informatica">Tecnicatura en Informática</option>
-                            <option value="Administracion">Administración</option>
-                            <option value="Enfermeria">Enfermería</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Documento Adjunto (Solo PDF, máx. 8 MB)</label>
-                    <div class="file-drop-area">
-                        <span id="dropMsg" style="font-size: 13px; color: var(--text-muted);">Haga clic o arrastre su PDF aquí</span>
-                        <input type="file" id="archivoPDF" name="archivoPDF" accept="application/pdf" required>
-                    </div>
-                    <div id="fileInfo" class="file-name"></div>
-                </div>
-
-                <button type="submit" id="btnEnviar" class="btn-submit">Enviar Inscripción</button>
-            </form>
-        </div>
+        <div id="mensajeRespuesta" class="mt-4 text-center font-medium"></div>
     </div>
 
-   <script>
-        // ==============================================================================
-        // URL DE TU IMPLEMENTACIÓN DE APPS SCRIPT
-        // ==============================================================================
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT9mGeaP0hOmH3a6pLI8S0yLLUK5L2BY2tzM0puxIexkFWIWPbIJqIWXpqapWHh-0q/exec";
-
-        const form = document.getElementById('registroForm');
-        const fileInput = document.getElementById('archivoPDF');
-        const fileInfo = document.getElementById('fileInfo');
-        const alertBox = document.getElementById('alertBox');
-        const btnEnviar = document.getElementById('btnEnviar');
-
-        // ==============================================================================
-        // CONVERSIÓN DIRECTA A MAYÚSCULAS AL SALIR DE LOS CAMPOS (BLUR Y CHANGE)
-        // ==============================================================================
-        const apellidoInput = document.getElementById('apellido');
-        const nombreInput = document.getElementById('nombre');
-
-        function convertirAMayusculas(e) {
-            e.target.value = e.target.value.toUpperCase();
-        }
-
-        if (apellidoInput) {
-            apellidoInput.addEventListener('blur', convertirAMayusculas);
-            apellidoInput.addEventListener('change', convertirAMayusculas);
-        }
-
-        if (nombreInput) {
-            nombreInput.addEventListener('blur', convertirAMayusculas);
-            nombreInput.addEventListener('change', convertirAMayusculas);
-        }
-
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                if (file.size > 8 * 1024 * 1024) {
-                    mostrarAlerta("El archivo excede el tamaño máximo permitido de 8 MB.", "error");
-                    fileInput.value = "";
-                    fileInfo.textContent = "";
-                    return;
-                }
-                if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith('.pdf')) {
-                    mostrarAlerta("Solo se aceptan archivos en formato PDF.", "error");
-                    fileInput.value = "";
-                    fileInfo.textContent = "";
-                    return;
-                }
-                ocultarAlerta();
-                fileInfo.textContent = `Archivo cargado: ${file.name} (${(file.size / (1024*1024)).toFixed(2)} MB)`;
-            }
+    <script>
+        // Convertir campos de texto a mayúsculas automáticamente al salir del input
+        document.querySelectorAll('.uppercase-input').forEach(input => {
+            input.addEventListener('blur', function() {
+                this.value = this.value.toUpperCase();
+            });
         });
 
-        form.addEventListener('submit', function(e) {
+        function actualizarCamposArchivos() {
+            const tramite = document.getElementById('tipoTramite').value;
+            const container = document.getElementById('inputsArchivosContainer');
+            container.innerHTML = '';
+
+            if (!tramite) return;
+
+            let campos = [];
+            if (tramite.includes('Analítico')) {
+                campos = [
+                    { id: 'partidaNacimiento', label: 'Partida de Nacimiento (PDF)' },
+                    { id: 'copiaDni', label: 'Copia de DNI (PDF)' },
+                    { id: 'tituloAnterior', label: 'Título Anterior (PDF)' },
+                    { id: 'comprobantePagoA', label: 'Comprobante de Pago - Monto A (PDF)' }
+                ];
+            } else if (tramite.includes('Título') || tramite.includes('Certificación')) {
+                campos = [
+                    { id: 'comprobantePagoB', label: 'Comprobante de Pago - Monto B (PDF)' },
+                    { id: 'partidaActualizada', label: 'Partida de Nacimiento Actualizada (PDF)' },
+                    { id: 'constanciaCuil', label: 'Constancia de CUIL (PDF)' },
+                    { id: 'otraDocumentacion', label: 'Otra Documentación Requerida (PDF)' }
+                ];
+            }
+
+            campos.forEach(campo => {
+                const div = document.createElement('div');
+                div.className = 'flex flex-col';
+                div.innerHTML = `
+                    <label class="text-sm font-medium text-gray-700">${campo.label}</label>
+                    <input type="file" id="${campo.id}" name="${campo.id}" accept="application/pdf" required class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Función auxiliar para convertir archivo a Base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        document.getElementById('tramiteForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            ocultarAlerta();
-
-            const dni = document.getElementById('dni').value.trim();
-            if (!/^\d{8}$/.test(dni)) {
-                mostrarAlerta("El DNI debe contener exactamente 8 números.", "error");
-                return;
-            }
-
-            const file = fileInput.files[0];
-            if (!file) {
-                mostrarAlerta("Debe adjuntar obligatoriamente un archivo PDF.", "error");
-                return;
-            }
-
-            btnEnviar.disabled = true;
-            btnEnviar.innerHTML = '<span class="spinner"></span> Procesando envío...';
             
-            mostrarAlerta("Aguarde un momento, su solicitud se está procesando...", "success");
+            const btnEnviar = document.getElementById('btnEnviar');
+            const loading = document.getElementById('loading');
+            const mensajeRespuesta = document.getElementById('mensajeRespuesta');
+            
+            btnEnviar.disabled = true;
+            loading.classList.remove('hidden');
+            mensajeRespuesta.textContent = '';
 
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-                const base64Data = reader.result.split(',')[1];
+            try {
+                const tramite = document.getElementById('tipoTramite').value;
+                const fileInputs = document.getElementById('inputsArchivosContainer').querySelectorAll('input[type="file"]');
+                
+                let archivosObj = {};
+                for (let input of fileInputs) {
+                    if (input.files.length > 0) {
+                        const file = input.files[0];
+                        if (file.size > 8 * 1024 * 1024) {
+                            throw new Error(`El archivo ${file.name} supera el límite de 8 MB.`);
+                        }
+                        const base64Str = await fileToBase64(file);
+                        archivosObj[input.id] = {
+                            nombre: file.name,
+                            tipo: file.type,
+                            base64: base64Str
+                        };
+                    }
+                }
+
                 const payload = {
-                    dni: dni,
+                    dni: document.getElementById('dni').value.trim(),
+                    email: document.getElementById('email').value.trim(),
                     apellido: document.getElementById('apellido').value.trim(),
                     nombre: document.getElementById('nombre').value.trim(),
                     sede: document.getElementById('sede').value.trim(),
+                    tipoTramite: tramite,
                     carrera: document.getElementById('carrera').value.trim(),
-                    archivo: {
-                        base64: base64Data,
-                        nombre: file.name,
-                        tipo: file.type
-                    }
+                    archivos: archivosObj
                 };
 
-                fetch(SCRIPT_URL, {
+                // Reemplaza esta URL con la URL de tu Web App de Google Apps Script desplegada
+                const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwRY251qidMY-mrXllnKGcokK2yslnjBG4A4PXUPGZboB4ZycNpcb3KLa0XIbcbm1WRyw/exec";
+
+                const response = await fetch(WEB_APP_URL, {
                     method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8',
-                    },
                     body: JSON.stringify(payload)
-                })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.success) {
-                        mostrarAlerta(result.message, "success");
-                        form.reset();
-                        fileInfo.textContent = "";
-
-                        setTimeout(() => {
-                            ocultarAlerta();
-                        }, 5000);
-
-                    } else {
-                        mostrarAlerta(result.message, "error");
-                    }
-                    restaurarBoton();
-                })
-                .catch(error => {
-                    mostrarAlerta("Error de conexión con el servidor. Verifique su red.", "error");
-                    restaurarBoton();
                 });
-            };
-            reader.onerror = function () {
-                mostrarAlerta("Error al leer el archivo en el navegador.", "error");
-                restaurarBoton();
-            };
+
+                const resultado = await response.json();
+
+                if (resultado.success) {
+                    mensajeRespuesta.className = "mt-4 text-center font-medium text-green-600";
+                    mensajeRespuesta.textContent = resultado.message;
+                    document.getElementById('tramiteForm').reset();
+                    document.getElementById('inputsArchivosContainer').innerHTML = '';
+                } else {
+                    throw new Error(resultado.message);
+                }
+
+            } catch (error) {
+                mensajeRespuesta.className = "mt-4 text-center font-medium text-red-600";
+                mensajeRespuesta.textContent = "Error: " + error.message;
+            } finally {
+                btnEnviar.disabled = false;
+                loading.classList.add('hidden');
+            }
         });
-
-        function restaurarBoton() {
-            btnEnviar.disabled = false;
-            btnEnviar.textContent = "Enviar Inscripción";
-        }
-
-        function mostrarAlerta(mensaje, tipo) {
-            alertBox.textContent = mensaje;
-            alertBox.style.display = "block";
-            alertBox.className = tipo === "error" ? "alert alert-error" : "alert alert-success";
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function ocultarAlerta() {
-            alertBox.style.display = "none";
-        }
     </script>
 </body>
 </html>

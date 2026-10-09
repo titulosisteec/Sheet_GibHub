@@ -34,6 +34,15 @@
                             <input type="text" id="nombres" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                         </div>
                         <div>
+                            <label class="block text-base font-semibold text-slate-700 mb-2">Género *</label>
+                            <select id="genero" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                <option value="">Seleccione...</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-base font-semibold text-slate-700 mb-2">Tipo de Documento *</label>
                             <select id="tipoDocumento" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                                 <option value="DNI">DNI</option>
@@ -79,9 +88,7 @@
                             <input type="tel" id="telefono" maxlength="10" placeholder="Ej: 2614444444" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                             <p class="text-sm text-slate-500 mt-1">Código de área sin 0 + número sin 15 (Total 10 números).</p>
                         </div>
-                        <div>
-                            <!-- Espacio equilibrado -->
-                        </div>
+                        <div></div>
                         <div>
                             <label class="block text-base font-semibold text-slate-700 mb-2">Correo Electrónico *</label>
                             <input type="email" id="email" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
@@ -107,7 +114,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Tipo de Trámite *</label>
+                            <label class="block text-base font-semibold text-slate-700 mb-2">Trámite *</label>
                             <select id="tramite" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                                 <option value="">Seleccione un trámite...</option>
                                 <option value="Analítico Incompleto">Analítico Incompleto</option>
@@ -117,7 +124,15 @@
                                 <option value="Certificación Técnico Profesional">Certificación Técnico Profesional</option>
                             </select>
                         </div>
-                        <div class="md:col-span-2">
+                        <div>
+                            <label class="block text-base font-semibold text-slate-700 mb-2">Tipo de Trámite *</label>
+                            <select id="tipoTramite" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                <option value="Original">Original</option>
+                                <option value="Duplicado">Duplicado</option>
+                                <option value="Triplicado">Triplicado</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-base font-semibold text-slate-700 mb-2">Carrera *</label>
                             <select id="carrera" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                                 <option value="">Seleccione una carrera...</option>
@@ -183,7 +198,7 @@
                 const fsize = input.files[0].size;
                 if (fsize > MAX_SIZE) {
                     error.classList.remove('hidden');
-                    input.value = ""; // Limpiar archivo inválido
+                    input.value = ""; 
                     return false;
                 } else {
                     error.classList.add('hidden');
@@ -235,20 +250,21 @@
             // Leer archivos en Base64
             processFiles().then(fileData => {
                 const payload = {
-                    apellido: document.getElementById('apellido').value.trim().toUpperCase(),
-                    nombres: document.getElementById('nombres').value.trim().toUpperCase(),
+                    cuil: cuil,
                     tipoDocumento: document.getElementById('tipoDocumento').value,
                     documento: document.getElementById('documento').value.trim(),
-                    cuil: cuil,
+                    apellido: document.getElementById('apellido').value.trim().toUpperCase(),
+                    nombres: document.getElementById('nombres').value.trim().toUpperCase(),
+                    genero: document.getElementById('genero').value,
                     fechaNacimiento: document.getElementById('fechaNacimiento').value,
                     lugarNacimiento: document.getElementById('lugarNacimiento').value.trim().toUpperCase(),
                     provincia: document.getElementById('provincia').value.trim().toUpperCase(),
                     nacionalidad: document.getElementById('nacionalidad').value.trim().toUpperCase(),
-                    telefono: telefono,
                     email: email,
-                    sede: document.getElementById('sede').value,
-                    tramite: document.getElementById('tramite').value,
-                    tipoTramite: "Solicitud",
+                    telefono: telefono,
+                    sedeSeleccionada: document.getElementById('sede').value,
+                    Tramite: document.getElementById('tramite').value,
+                    tipoTramite: document.getElementById('tipoTramite').value,
                     carrera: document.getElementById('carrera').value,
                     archivoDni: fileData.dni,
                     nombreArchivoDni: fileData.nombreDni,

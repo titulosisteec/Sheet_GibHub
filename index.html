@@ -69,23 +69,18 @@
                     </div>
                 </fieldset>
 
-                <!-- Domicilio y Contacto -->
+                <!-- Contacto -->
                 <fieldset class="border border-slate-200 rounded-xl p-6 bg-slate-50/50">
-                    <legend class="text-xl font-bold text-indigo-700 px-3">2. Domicilio y Contacto</legend>
+                    <legend class="text-xl font-bold text-indigo-700 px-3">2. Contacto</legend>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                        <div class="md:col-span-2">
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Domicilio *</label>
-                            <input type="text" id="domicilio" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Localidad *</label>
-                            <input type="text" id="localidad" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
                         <div>
                             <label class="block text-base font-semibold text-slate-700 mb-2">Celular / Teléfono (10 dígitos) *</label>
                             <input type="tel" id="telefono" maxlength="10" placeholder="Ej: 2614444444" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                             <p class="text-sm text-slate-500 mt-1">Código de área sin 0 + número sin 15 (Total 10 números).</p>
+                        </div>
+                        <div>
+                            <!-- Espacio equilibrado -->
                         </div>
                         <div>
                             <label class="block text-base font-semibold text-slate-700 mb-2">Correo Electrónico *</label>
@@ -99,9 +94,9 @@
                     </div>
                 </fieldset>
 
-                <!-- Datos Académicos -->
+                <!-- Datos Académicos y Trámite -->
                 <fieldset class="border border-slate-200 rounded-xl p-6 bg-slate-50/50">
-                    <legend class="text-xl font-bold text-indigo-700 px-3">3. Datos Académicos y Motivo</legend>
+                    <legend class="text-xl font-bold text-indigo-700 px-3">3. Datos Académicos y Trámite</legend>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                         <div>
@@ -112,13 +107,17 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Trámite *</label>
+                            <label class="block text-base font-semibold text-slate-700 mb-2">Tipo de Trámite *</label>
                             <select id="tramite" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                <option value="Titulos">Títulos</option>
-                                <option value="Analiticos">Analíticos</option>
+                                <option value="">Seleccione un trámite...</option>
+                                <option value="Analítico Incompleto">Analítico Incompleto</option>
+                                <option value="Certificación Intermedia">Certificación Intermedia</option>
+                                <option value="Analítico Completo">Analítico Completo</option>
+                                <option value="Título Digital">Título Digital</option>
+                                <option value="Certificación Técnico Profesional">Certificación Técnico Profesional</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="md:col-span-2">
                             <label class="block text-base font-semibold text-slate-700 mb-2">Carrera *</label>
                             <select id="carrera" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                                 <option value="">Seleccione una carrera...</option>
@@ -126,14 +125,6 @@
                                 <option value="Tecnicatura Superior en Administración de Empresas">Tecnicatura Superior en Administración de Empresas</option>
                                 <option value="Tecnicatura Superior en Gestoría">Tecnicatura Superior en Gestoría</option>
                             </select>
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Año de Cohorte *</label>
-                            <input type="number" id="cohorte" min="2000" max="2030" placeholder="Ej: 2023" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Motivo de la Solicitud *</label>
-                            <textarea id="motivo" rows="4" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
                         </div>
                     </div>
                 </fieldset>
@@ -253,16 +244,12 @@
                     lugarNacimiento: document.getElementById('lugarNacimiento').value.trim().toUpperCase(),
                     provincia: document.getElementById('provincia').value.trim().toUpperCase(),
                     nacionalidad: document.getElementById('nacionalidad').value.trim().toUpperCase(),
-                    domicilio: document.getElementById('domicilio').value.trim().toUpperCase(),
-                    localidad: document.getElementById('localidad').value.trim().toUpperCase(),
                     telefono: telefono,
                     email: email,
                     sede: document.getElementById('sede').value,
                     tramite: document.getElementById('tramite').value,
                     tipoTramite: "Solicitud",
                     carrera: document.getElementById('carrera').value,
-                    cohorte: document.getElementById('cohorte').value.trim(),
-                    motivo: document.getElementById('motivo').value.trim(),
                     archivoDni: fileData.dni,
                     nombreArchivoDni: fileData.nombreDni,
                     archivoTitulo: fileData.titulo,
@@ -272,7 +259,7 @@
                 };
 
                 // REEMPLAZAR ESTA URL CON TU NUEVA URL /exec DE LA CUENTA INSTITUCIONAL
-                const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyXrXrPMCqz62CblUHC69cWMZwlI8SVxCkHX1eV3WrW-u1zZXwO6Vy5F7oNRM5ox5WtQw/exec";
+                const WEB_APP_URL = "AQUÍ_PEGA_TU_NUEVA_URL_DE_APPS_SCRIPT";
 
                 fetch(WEB_APP_URL, {
                     method: 'POST',

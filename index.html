@@ -314,5 +314,53 @@
             };
         }
     </script>
+    
+    <!-- AQUÍ PEGAS EL NUEVO BLOQUE COMPLETO DE CÓDIGO -->
+    <script>
+        // Reemplaza esta URL por la URL pública desplegada de tu Web App en Apps Script
+        const URL_WEB_APP = "https://script.google.com/macros/s/AKfycbzbFeLdYl1kY5bU8GSoZmGhBYAMGVoXL2g27buHgM7lYSFB1QHkAWxqhZTmg-RG_XRDNg/exec";
+
+        window.addEventListener('DOMContentLoaded', () => {
+            cargarOpcionesDinamicas();
+        });
+
+        function cargarOpcionesDinamicas() {
+            fetch(URL_WEB_APP + "?action=getPublicConfig")
+                .then(res => res.json())
+                .then(data => {
+                    if(data.status === 'success') {
+                        
+                        // 1. Cargar Sedes activas
+                        const selectSede = document.getElementById('sedeSeleccionada');
+                        if(selectSede && data.sedes) {
+                            selectSede.innerHTML = '';
+                            data.sedes.filter(s => s.estado === 'Activo').forEach(s => {
+                                selectSede.add(new Option(s.nombre, s.nombre));
+                            });
+                        }
+
+                        // 2. Cargar Carreras activas
+                        const selectCarrera = document.getElementById('carrera');
+                        if(selectCarrera && data.carreras) {
+                            selectCarrera.innerHTML = '';
+                            data.carreras.filter(c => c.estado === 'Activo').forEach(c => {
+                                selectCarrera.add(new Option(c.nombre, c.nombre));
+                            });
+                        }
+
+                        // 3. Cargar Trámites activos
+                        const selectTramite = document.getElementById('Tramite');
+                        if(selectTramite && data.tramites) {
+                            selectTramite.innerHTML = '';
+                            data.tramites.filter(t => t.estado === 'Activo').forEach(t => {
+                                selectTramite.add(new Option(t.nombre, t.nombre));
+                            });
+                        }
+                    }
+                })
+                .catch(err => console.log("Cargando opciones locales por defecto...", err));
+        }
+    </script>
+
 </body>
 </html>

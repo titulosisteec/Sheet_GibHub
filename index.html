@@ -6,17 +6,23 @@
     <title>Solicitud de Trámites Académicos - ISTEEC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Fuerza la escritura en mayúsculas de manera visual y en input */
+        .uppercase-input {
+            text-transform: uppercase;
+        }
+    </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen p-4 md:p-10">
 
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-100">
         
         <!-- ENCABEZADO INSTITUCIONAL -->
-        <div class="bg-indigo-900 text-white p-8 md:p-10 text-center space-y-2">
+        <div class="bg-indigo-900 text-white p-8 md:p-10 text-center space-y-3">
             <h1 class="text-2xl md:text-4xl font-black tracking-tight">Formulario de Solicitud de Trámites</h1>
             <p class="text-lg md:text-2xl font-bold text-indigo-200 tracking-wide">Títulos y Certificaciones ISTEEC N° 9-013</p>
-            <p class="text-xs md:text-sm text-indigo-300 font-medium">
-                <i class="fa-solid fa-envelope mr-1"></i> titulos@isteec.edu.ar
+            <p class="text-base md:text-xl text-indigo-200 font-semibold flex items-center justify-center gap-2">
+                <i class="fa-solid fa-envelope text-indigo-300 text-2xl md:text-3xl"></i> titulos@isteec.edu.ar
             </p>
         </div>
 
@@ -32,55 +38,61 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">CUIL (11 dígitos) *</label>
-                        <input type="text" id="cuil" required maxlength="11" minlength="11" inputmode="numeric" oninput="validarSoloNumeros(this)" placeholder="Ej: 20123456789" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <input type="text" id="cuil" required maxlength="11" minlength="11" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 20123456789" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
                     </div>
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">N° de Legajo (4 dígitos) *</label>
-                        <input type="text" id="legajo" required maxlength="4" minlength="4" inputmode="numeric" oninput="validarSoloNumeros(this)" placeholder="Ej: 4521" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <input type="text" id="legajo" required maxlength="4" minlength="4" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 4521" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Tipo de Documento *</label>
-                        <select id="tipoDoc" required class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                        <select id="tipoDoc" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
                             <option value="">Seleccionar...</option>
                             <option value="DNI">DNI</option>
-                            <option value="Pasaporte">Pasaporte</option>
-                            <option value="Cédula">Cédula</option>
+                            <option value="Pasaporte">PASAPORTE</option>
+                            <option value="Cédula">CÉDULA</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Número de Documento (8 dígitos) *</label>
-                        <input type="text" id="documento" required maxlength="8" minlength="7" inputmode="numeric" oninput="validarSoloNumeros(this)" placeholder="Ej: 35123456" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <input type="text" id="documento" required maxlength="8" minlength="7" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 35123456" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Apellido(s) *</label>
-                        <input type="text" id="apellido" required placeholder="Pérez" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <input type="text" id="apellido" required oninput="convertirMayusculas(this); validarFlujoProgresivo();" placeholder="PÉREZ" class="uppercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
                     </div>
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Nombre(s) *</label>
-                        <input type="text" id="nombres" required placeholder="Juan" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <input type="text" id="nombres" required oninput="convertirMayusculas(this); validarFlujoProgresivo();" placeholder="JUAN" class="uppercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Correo Electrónico *</label>
-                        <input type="email" id="email" required placeholder="alumno@ejemplo.com" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <input type="email" id="email" required oninput="convertirMayusculas(this); validarCoincidenciaEmail(); validarFlujoProgresivo();" placeholder="ALUMNO@EJEMPLO.COM" class="uppercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
                     </div>
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Teléfono / WhatsApp *</label>
-                        <input type="tel" id="telefono" required placeholder="2611234567" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Confirmar Correo Electrónico *</label>
+                        <input type="email" id="confirmEmail" required oninput="convertirMayusculas(this); validarCoincidenciaEmail(); validarFlujoProgresivo();" placeholder="ALUMNO@EJEMPLO.COM" class="uppercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <p id="msgErrorEmail" class="text-xs text-red-600 font-bold mt-1.5 hidden"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Las direcciones de correo electrónico no coinciden.</p>
                     </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Teléfono / WhatsApp *</label>
+                    <input type="tel" id="telefono" required oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="2611234567" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
                 </div>
             </div>
 
-            <!-- DATOS DEL TRÁMITE -->
-            <div class="space-y-6 pt-6 border-t-2 border-slate-100">
+            <!-- DATOS DEL TRÁMITE (HABILITADO SOLO SI SE COMPLETAN LOS DATOS PERSONALES) -->
+            <div id="bloqueTramite" class="space-y-6 pt-6 border-t-2 border-slate-100 opacity-50 pointer-events-none transition-all duration-300">
                 <h2 class="text-xl font-extrabold text-slate-800 border-b-2 border-indigo-100 pb-3 flex items-center gap-3">
                     <i class="fa-solid fa-graduation-cap text-indigo-600 text-2xl"></i> Elección de Sede y Trámite
                 </h2>
@@ -88,16 +100,16 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Sede *</label>
-                        <select id="sede" required onchange="actualizarCarreras()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                        <select id="sede" required onchange="actualizarCarreras(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
                             <option value="">Seleccionar Sede...</option>
-                            <option value="Central">Central</option>
-                            <option value="Uspallata">Uspallata</option>
+                            <option value="Central">CENTRAL</option>
+                            <option value="Uspallata">USPALLATA</option>
                         </select>
                     </div>
 
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Carrera *</label>
-                        <select id="carrera" required class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                        <select id="carrera" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
                             <option value="">Seleccionar Sede primero...</option>
                         </select>
                     </div>
@@ -106,29 +118,29 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Trámite a Solicitar *</label>
-                        <select id="tramite" required onchange="actualizarOpcionesDocumentacion()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                        <select id="tramite" required onchange="actualizarOpcionesDocumentacion(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
                             <option value="">Seleccionar Trámite...</option>
-                            <option value="Título Digital">Título Digital</option>
-                            <option value="Certificación Técnico Profesional Nivel 3">Certificación Técnico Profesional Nivel 3</option>
-                            <option value="Analítico Completo">Analítico Completo</option>
-                            <option value="Analítico Incompleto">Analítico Incompleto</option>
-                            <option value="Certificación Intermedia">Certificación Intermedia</option>
+                            <option value="Título Digital">TÍTULO DIGITAL</option>
+                            <option value="Certificación Técnico Profesional Nivel 3">CERTIFICACIÓN TÉCNICO PROFESIONAL NIVEL 3</option>
+                            <option value="Analítico Completo">ANALÍTICO COMPLETO</option>
+                            <option value="Analítico Incompleto">ANALÍTICO INCOMPLETO</option>
+                            <option value="Certificación Intermedia">CERTIFICACIÓN INTERMEDIA</option>
                         </select>
                     </div>
 
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Tipo de Emisión *</label>
-                        <select id="tipoTramite" required onchange="actualizarOpcionesDocumentacion()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                        <select id="tipoTramite" required onchange="actualizarOpcionesDocumentacion(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
                             <option value="">Seleccionar Tipo...</option>
-                            <option value="Original">Original</option>
-                            <option value="Duplicado">Duplicado</option>
-                            <option value="Triplicado">Triplicado</option>
+                            <option value="Original">ORIGINAL</option>
+                            <option value="Duplicado">DUPLICADO</option>
+                            <option value="Triplicado">TRIPLICADO</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            <!-- ADJUNTAR DOCUMENTACIÓN -->
+            <!-- ADJUNTAR DOCUMENTACIÓN (HABILITADO SEGÚN FLUJO) -->
             <div id="seccionDocumentacion" class="space-y-6 pt-6 border-t-2 border-slate-100 hidden">
                 <h2 class="text-xl font-extrabold text-slate-800 border-b-2 border-indigo-100 pb-3 flex items-center gap-3">
                     <i class="fa-solid fa-file-pdf text-indigo-600 text-2xl"></i> Documentación Obligatoria (Formato PDF)
@@ -144,7 +156,7 @@
 
                 <!-- CONTENEDOR DE CAMPOS DE ARCHIVOS -->
                 <div id="contenedorArchivos" class="space-y-4">
-                    <!-- Los campos se generan dinámicamente -->
+                    <!-- Campos generados dinámicamente -->
                 </div>
             </div>
 
@@ -182,21 +194,72 @@
     </div>
 
     <script>
+        // CONVERSIÓN AUTOMÁTICA A MAYÚSCULAS
+        function convertirMayusculas(input) {
+            input.value = input.value.toUpperCase();
+        }
+
         // FILTRADO SOLO NÚMEROS
         function validarSoloNumeros(input) {
             input.value = input.value.replace(/[^0-9]/g, '');
         }
 
+        // VALIDAR COINCIDENCIA DE EMAIL
+        function validarCoincidenciaEmail() {
+            const email = document.getElementById('email').value.trim();
+            const confirmEmail = document.getElementById('confirmEmail').value.trim();
+            const msgError = document.getElementById('msgErrorEmail');
+
+            if (confirmEmail.length > 0 && email !== confirmEmail) {
+                msgError.classList.remove('hidden');
+                return false;
+            } else {
+                msgError.classList.add('hidden');
+                return email.length > 0 && email === confirmEmail;
+            }
+        }
+
+        // VALIDACIÓN DE FLUJO PROGRESIVO OBLIGATORIO
+        function validarFlujoProgresivo() {
+            const cuil = document.getElementById('cuil').value.trim();
+            const legajo = document.getElementById('legajo').value.trim();
+            const tipoDoc = document.getElementById('tipoDoc').value;
+            const documento = document.getElementById('documento').value.trim();
+            const apellido = document.getElementById('apellido').value.trim();
+            const nombres = document.getElementById('nombres').value.trim();
+            const emailValido = validarCoincidenciaEmail();
+            const telefono = document.getElementById('telefono').value.trim();
+
+            const datosPersonalesCompletos = cuil.length === 11 && 
+                                            legajo.length === 4 && 
+                                            tipoDoc !== "" && 
+                                            documento.length >= 7 && 
+                                            apellido !== "" && 
+                                            nombres !== "" && 
+                                            emailValido && 
+                                            telefono !== "";
+
+            const bloqueTramite = document.getElementById('bloqueTramite');
+
+            if (datosPersonalesCompletos) {
+                bloqueTramite.classList.remove('opacity-50', 'pointer-events-none');
+            } else {
+                bloqueTramite.classList.add('opacity-50', 'pointer-events-none');
+            }
+
+            evaluarEstadoBotonEnviar();
+        }
+
         // CONFIGURACIÓN DE CARRERAS POR SEDE
         const CARRERAS_POR_SEDE = {
             "Central": [
-                "Tecnicatura Superior en Desarrollo de Software",
-                "Tecnicatura Superior en Higiene y Seguridad",
-                "Tecnicatura Superior en Enfermería"
+                "TECNICATURA SUPERIOR EN DESARROLLO DE SOFTWARE",
+                "TECNICATURA SUPERIOR EN HIGIENE Y SEGURIDAD",
+                "TECNICATURA SUPERIOR EN ENFERMERÍA"
             ],
             "Uspallata": [
-                "Tecnicatura Superior en Turismo y Hotelería",
-                "Tecnicatura Superior en Conservación de la Naturaleza"
+                "TECNICATURA SUPERIOR EN TURISMO Y HOTELERÍA",
+                "TECNICATURA SUPERIOR EN CONSERVACIÓN DE LA NATURALEZA"
             ]
         };
 
@@ -245,24 +308,24 @@
 
             if (esTituloOCertificacion) {
                 requisitos = [
-                    "1-Partida de Nacimiento (Actualizada)",
-                    "2-Copia DNI (Frente y Dorso)",
-                    "3-Certificado Analítico de Estudios Secundarios, frente y dorso. No se aceptan diplomas.",
-                    "4-Constancia de CUIL",
-                    "5-Comprobante de Pago"
+                    "1-PARTIDA DE NACIMIENTO (ACTUALIZADA)",
+                    "2-COPIA DNI (FRENTE Y DORSO)",
+                    "3-CERTIFICADO ANALÍTICO DE ESTUDIOS SECUNDARIOS, FRENTE Y DORSO. NO SE ACEPTAN DIPLOMAS.",
+                    "4-CONSTANCIA DE CUIL",
+                    "5-COMPROBANTE DE PAGO"
                 ];
                 if (tipoTramite === 'Duplicado' || tipoTramite === 'Triplicado') {
-                    requisitos.push("6-Denuncia de Extravío");
+                    requisitos.push("6-DENUNCIA DE EXTRAVÍO");
                 }
             } else if (esAnaliticoOIntermedia) {
                 requisitos = [
-                    "1-Copia DNI (Frente y Dorso)",
-                    "2-Partida de Nacimiento",
-                    "3-Certificado Analítico de Estudios Secundarios, frente y dorso. No se aceptan diplomas.",
-                    "4-Comprobante de Pago"
+                    "1-COPIA DNI (FRENTE Y DORSO)",
+                    "2-PARTIDA DE NACIMIENTO",
+                    "3-CERTIFICADO ANALÍTICO DE ESTUDIOS SECUNDARIOS, FRENTE Y DORSO. NO SE ACEPTAN DIPLOMAS.",
+                    "4-COMPROBANTE DE PAGO"
                 ];
                 if (tipoTramite === 'Duplicado' || tipoTramite === 'Triplicado') {
-                    requisitos.push("5-Denuncia de Extravío");
+                    requisitos.push("5-DENUNCIA DE EXTRAVÍO");
                 }
             }
 

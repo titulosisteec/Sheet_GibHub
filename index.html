@@ -3,294 +3,395 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesa de Entradas - ISTEEC</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Solicitud de Trámites Académicos</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen p-4 md:p-8">
 
-    <main class="flex-grow container mx-auto px-4 py-10 max-w-4xl">
-        <div class="bg-white shadow-xl rounded-2xl p-8 md:p-12 border border-slate-100">
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
+        
+        <!-- ENCABEZADO -->
+        <div class="bg-indigo-900 text-white p-6 md:p-8 text-center">
+            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Formulario de Solicitud de Trámites</h1>
+            <p class="text-indigo-200 text-xs md:text-sm mt-2">Complete la información requerida y adjunte su documentación digitalizada.</p>
+        </div>
+
+        <!-- FORMULARIO -->
+        <form id="formAlumno" onsubmit="enviarFormulario(event)" class="p-6 md:p-8 space-y-6">
             
-            <div class="text-center mb-10">
-                <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">Formulario Gestión de Trámites</h1>
-                <p class="text-lg text-slate-600">Títulos y Certificaciones ISTEEC 9-013</p>
-                <p class="text-lg text-slate-600">correo: titulos@isteec.edu.ar</p>
-            </div>
+            <!-- DATOS PERSONALES -->
+            <div class="space-y-4">
+                <h2 class="text-lg font-bold text-slate-800 border-b pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-user text-indigo-600"></i> Datos Personales
+                </h2>
 
-            <form id="solicitudForm" class="space-y-8">
-                
-                <!-- Datos Personales -->
-                <fieldset class="border border-slate-200 rounded-xl p-6 bg-slate-50/50">
-                    <legend class="text-xl font-bold text-indigo-700 px-3">1. Datos Personales</legend>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Apellido/s *</label>
-                            <input type="text" id="apellido" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Nombre/s *</label>
-                            <input type="text" id="nombres" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Género *</label>
-                            <select id="genero" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                <option value="">Seleccione...</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Femenino">Femenino</option>
-                                <option value="Otro">Otro</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Tipo de Documento *</label>
-                            <select id="tipoDocumento" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                <option value="">Seleccione...</option>
-                                <option value="DNI">DNI</option>
-                                <option value="Pasaporte">Pasaporte</option>
-                                <option value="Extranjero">Extranjero</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">N° de Documento (8 números) *</label>
-                            <input type="text" id="documento" maxlength="8" placeholder="Sin guiones ni espacios" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                            <p class="text-sm text-slate-500 mt-1">Ingrese exactamente 8 dígitos numéricos.</p>
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">N° CUIL (11 números) *</label>
-                            <input type="text" id="cuil" maxlength="11" placeholder="Sin guiones ni espacios" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                            <p class="text-sm text-slate-500 mt-1">Ingrese exactamente 11 dígitos numéricos.</p>
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Fecha de Nacimiento *</label>
-                            <input type="date" id="fechaNacimiento" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Lugar de Nacimiento *</label>
-                            <input type="text" id="lugarNacimiento" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Provincia *</label>
-                            <input type="text" id="provincia" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Nacionalidad *</label>
-                            <input type="text" id="nacionalidad" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">CUIL *</label>
+                        <input type="text" id="cuil" required placeholder="Ej: 20123456789" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
-                </fieldset>
-
-                <!-- Contacto -->
-                <fieldset class="border border-slate-200 rounded-xl p-6 bg-slate-50/50">
-                    <legend class="text-xl font-bold text-indigo-700 px-3">2. Contacto</legend>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Celular / Teléfono (10 dígitos) *</label>
-                            <input type="tel" id="telefono" maxlength="10" placeholder="Ej: 2614444444" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                            <p class="text-sm text-slate-500 mt-1">Código de área sin 0 + número sin 15 (Total 10 números).</p>
-                        </div>
-                        <div></div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Correo Electrónico *</label>
-                            <input type="email" id="email" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Reingrese Correo Electrónico *</label>
-                            <input type="email" id="emailConfirm" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                            <span id="emailError" class="text-sm text-red-600 font-medium hidden mt-1">Los correos electrónicos no coinciden.</span>
-                        </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">N° de Legajo *</label>
+                        <input type="text" id="legajo" required placeholder="Ej: 4521" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
-                </fieldset>
-
-                <!-- Datos Académicos y Trámite -->
-                <fieldset class="border border-slate-200 rounded-xl p-6 bg-slate-50/50">
-                    <legend class="text-xl font-bold text-indigo-700 px-3">3. Datos Académicos y Trámite</legend>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Sede *</label>
-                            <select id="sedeSeleccionada" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                <option value="Central">Central</option>
-                                <option value="Uspallata">Uspallata</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Trámite *</label>
-                            <select id="Tramite" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                <option value="">Seleccione un trámite...</option>
-                                <option value="Analítico Incompleto">Analítico Incompleto</option>
-                                <option value="Analítico Completo">Analítico Completo</option>
-                                <option value="Certificación Intermedia">Certificación Intermedia</option>
-                                <option value="Título Digital">Título Digital</option>
-                                <option value="Certificación Técnico Profesional">Certificación Técnico Profesional</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Tipo de Trámite *</label>
-                            <select id="tipoTramite" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                <option value="Original">Original</option>
-                                <option value="Duplicado">Duplicado</option>
-                                <option value="Triplicado">Triplicado</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Carrera *</label>
-                            <select id="carrera" required class="w-full px-4 py-3 text-lg border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                <option value="">Seleccione una carrera...</option>
-                                <option value="Tecnicatura Superior en Análisis de Sistemas">Tecnicatura Superior en Análisis de Sistemas</option>
-                                <option value="Tecnicatura Superior en Administración de Empresas">Tecnicatura Superior en Administración de Empresas</option>
-                                <option value="Tecnicatura Superior en Gestoría">Tecnicatura Superior en Gestoría</option>
-                            </select>
-                        </div>
-                    </div>
-                </fieldset>
-
-                <!-- Documentación Adjunta -->
-                <fieldset class="border border-slate-200 rounded-xl p-6 bg-slate-50/50">
-                    <legend class="text-xl font-bold text-indigo-700 px-3">4. Documentación Adjunta (Solo PDF - Máx 8MB)</legend>
-                    
-                    <div class="space-y-6 mt-4">
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Archivo DNI (Frente y Dorso en PDF) *</label>
-                            <input type="file" id="archivoDni" accept="application/pdf" required class="w-full text-base text-slate-500 file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-base file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
-                            <p id="errorDni" class="text-sm text-red-600 font-medium hidden mt-1">El archivo supera los 8 MB permitidos.</p>
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Constancia / Certificado en trámite (PDF) *</label>
-                            <input type="file" id="archivoTitulo" accept="application/pdf" required class="w-full text-base text-slate-500 file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-base file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
-                            <p id="errorTitulo" class="text-sm text-red-600 font-medium hidden mt-1">El archivo supera los 8 MB permitidos.</p>
-                        </div>
-                        <div>
-                            <label class="block text-base font-semibold text-slate-700 mb-2">Otra Documentación Adicional (Opcional - PDF)</label>
-                            <input type="file" id="archivoOtros" accept="application/pdf" class="w-full text-base text-slate-500 file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-base file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
-                            <p id="errorOtros" class="text-sm text-red-600 font-medium hidden mt-1">El archivo supera los 8 MB permitidos.</p>
-                        </div>
-                    </div>
-                </fieldset>
-
-                <!-- Botón de Envío -->
-                <div class="text-center pt-4">
-                    <button type="submit" id="btnEnviar" class="w-full md:w-auto px-10 py-4 bg-indigo-600 text-white font-bold text-xl rounded-xl shadow-lg hover:bg-indigo-700 transition duration-200 cursor-pointer">
-                        Enviar Solicitud
-                    </button>
-                    <div id="loading" class="hidden mt-4 text-indigo-600 font-semibold text-lg">Enviando solicitud, por favor espere...</div>
                 </div>
 
-            </form>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Tipo de Documento *</label>
+                        <select id="tipoDoc" required class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option value="">Seleccionar...</option>
+                            <option value="DNI">DNI</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                            <option value="Cédula">Cédula</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Número de Documento *</label>
+                        <input type="text" id="documento" required placeholder="Ej: 35123456" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Apellido(s) *</label>
+                        <input type="text" id="apellido" required placeholder="Pérez" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Nombre(s) *</label>
+                        <input type="text" id="nombres" required placeholder="Juan" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Correo Electrónico *</label>
+                        <input type="email" id="email" required placeholder="alumno@ejemplo.com" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Teléfono / WhatsApp *</label>
+                        <input type="tel" id="telefono" required placeholder="2611234567" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DATOS DEL TRÁMITE -->
+            <div class="space-y-4 pt-4 border-t">
+                <h2 class="text-lg font-bold text-slate-800 border-b pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-indigo-600"></i> Elección de Sede y Trámite
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Sede *</label>
+                        <select id="sede" required onchange="actualizarCarreras()" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option value="">Seleccionar Sede...</option>
+                            <option value="Central">Central</option>
+                            <option value="Uspallata">Uspallata</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Carrera *</label>
+                        <select id="carrera" required class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option value="">Seleccionar Sede primero...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Trámite a Solicitar *</label>
+                        <select id="tramite" required onchange="actualizarOpcionesDocumentacion()" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option value="">Seleccionar Trámite...</option>
+                            <option value="Título Digital">Título Digital</option>
+                            <option value="Certificación Técnico Profesional Nivel 3">Certificación Técnico Profesional Nivel 3</option>
+                            <option value="Analítico Completo">Analítico Completo</option>
+                            <option value="Analítico Incompleto">Analítico Incompleto</option>
+                            <option value="Certificación Intermedia">Certificación Intermedia</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Tipo de Emisión *</label>
+                        <select id="tipoTramite" required onchange="actualizarOpcionesDocumentacion()" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option value="">Seleccionar Tipo...</option>
+                            <option value="Original">Original</option>
+                            <option value="Duplicado">Duplicado</option>
+                            <option value="Triplicado">Triplicado</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADJUNTAR DOCUMENTACIÓN (DINÁMICO) -->
+            <div id="seccionDocumentacion" class="space-y-4 pt-4 border-t hidden">
+                <h2 class="text-lg font-bold text-slate-800 border-b pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-file-pdf text-indigo-600"></i> Documentación Obligatoria (Formato PDF)
+                </h2>
+
+                <!-- LEYENDA INFORMATIVA -->
+                <div class="bg-amber-50 border border-amber-200 text-amber-900 p-4 rounded-xl text-xs space-y-1">
+                    <p class="font-bold"><i class="fa-solid fa-circle-info mr-1"></i> Requisitos para la carga de archivos:</p>
+                    <p>• La documentación debe estar digitalizada en <strong>formato PDF</strong>.</p>
+                    <p>• Cada archivo debe pesar <strong>menos de 1 MB</strong>.</p>
+                    <p>• Podés comprimir o convertir archivos con <a href="https://www.ilovepdf.com/es" target="_blank" class="underline font-bold text-indigo-700">iLovePDF</a> o digitalizarlos con <a href="https://www.camscanner.com/" target="_blank" class="underline font-bold text-indigo-700">CamScanner</a>.</p>
+                </div>
+
+                <!-- CONTENEDOR DE CAMPOS DE ARCHIVOS -->
+                <div id="contenedorArchivos" class="space-y-3">
+                    <!-- Los campos se generan dinámicamente -->
+                </div>
+            </div>
+
+            <!-- BOTÓN ENVIAR -->
+            <div class="pt-6">
+                <button type="submit" id="btnEnviar" disabled class="w-full py-3.5 bg-slate-300 text-slate-500 font-bold rounded-xl shadow cursor-not-allowed transition-all duration-200">
+                    Enviar Solicitud
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- MODAL FLOTANTE DE ÉXITO -->
+    <div id="modalExito" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center space-y-4">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-4xl">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-800">¡La solicitud del trámite ha sido enviada con éxito!</h3>
+            <p class="text-sm text-slate-600">Se ha generado su solicitud bajo el N° de Trámite: <strong id="lblIdTramite" class="text-indigo-600 font-bold block text-lg mt-1"></strong></p>
+            <p class="text-xs text-amber-700 bg-amber-50 p-3 rounded-lg border border-amber-200">
+                <i class="fa-solid fa-clock mr-1"></i> Su solicitud ha sido recibida y está <strong>sujeta a aprobación</strong> por el equipo administrativo. Se le envió una copia al correo electrónico registrado.
+            </p>
+            <button onclick="window.location.reload()" class="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl shadow hover:bg-emerald-700 transition">
+                Aceptar y Finalizar
+            </button>
         </div>
-    </main>
+    </div>
+
+    <!-- SPINNER DE CARGA -->
+    <div id="spinnerCarga" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex flex-col justify-center items-center p-4 z-50 text-white space-y-3">
+        <i class="fa-solid fa-circle-notch fa-spin text-5xl text-indigo-400"></i>
+        <p class="font-bold text-lg">Procesando y subiendo archivos...</p>
+        <p class="text-xs text-slate-300">Por favor, no cierre esta pantalla.</p>
+    </div>
 
     <script>
-        const MAX_SIZE = 8 * 1024 * 1024; // 8 MB
+        // CONFIGURACIÓN DE CARRERAS POR SEDE
+        const CARRERAS_POR_SEDE = {
+            "Central": [
+                "Tecnicatura Superior en Desarrollo de Software",
+                "Tecnicatura Superior en Higiene y Seguridad",
+                "Tecnicatura Superior en Enfermería"
+            ],
+            "Uspallata": [
+                "Tecnicatura Superior en Turismo y Hotelería",
+                "Tecnicatura Superior en Conservación de la Naturaleza"
+            ]
+        };
 
-        function validarArchivo(inputId, errorId) {
-            const input = document.getElementById(inputId);
-            const error = document.getElementById(errorId);
-            if (input.files.length > 0) {
-                if (input.files[0].size > MAX_SIZE) {
-                    error.classList.remove('hidden');
-                    input.value = ""; 
-                    return false;
-                } else {
-                    error.classList.add('hidden');
-                    return true;
-                }
+        // URL DE TU SCRIPT EN GOOGLE APPS SCRIPT
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw9TESzp4IS1WOhZEWEEke2bOciQk5wD7IWBuma8VXUZQdgfXgu1ip-4mbCBdTZ9dJUnQ/exec";
+
+        let archivosValidados = {};
+
+        function actualizarCarreras() {
+            const sede = document.getElementById('sede').value;
+            const selectCarrera = document.getElementById('carrera');
+            selectCarrera.innerHTML = '<option value="">Seleccionar Carrera...</option>';
+
+            if (sede && CARRERAS_POR_SEDE[sede]) {
+                CARRERAS_POR_SEDE[sede].forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c;
+                    opt.textContent = c;
+                    selectCarrera.appendChild(opt);
+                });
+            } else {
+                selectCarrera.innerHTML = '<option value="">Seleccionar Sede primero...</option>';
             }
-            return true;
         }
 
-        document.getElementById('archivoDni').addEventListener('change', () => validarArchivo('archivoDni', 'errorDni'));
-        document.getElementById('archivoTitulo').addEventListener('change', () => validarArchivo('archivoTitulo', 'errorTitulo'));
-        document.getElementById('archivoOtros').addEventListener('change', () => validarArchivo('archivoOtros', 'errorOtros'));
+        function actualizarOpcionesDocumentacion() {
+            const tramite = document.getElementById('tramite').value;
+            const tipoTramite = document.getElementById('tipoTramite').value;
+            const seccion = document.getElementById('seccionDocumentacion');
+            const contenedor = document.getElementById('contenedorArchivos');
 
-        document.getElementById('solicitudForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+            contenedor.innerHTML = '';
+            archivosValidados = {};
 
-            const email = document.getElementById('email').value.trim();
-            const emailConfirm = document.getElementById('emailConfirm').value.trim();
-            const emailError = document.getElementById('emailError');
-
-            if (email !== emailConfirm) {
-                emailError.classList.remove('hidden');
-                document.getElementById('emailConfirm').focus();
-                return;
-            } else {
-                emailError.classList.add('hidden');
-            }
-
-            const cuil = document.getElementById('cuil').value.trim();
-            if (cuil.length !== 11 || isNaN(cuil)) {
-                alert("El N° de CUIL debe contener exactamente 11 números sin guiones.");
-                document.getElementById('cuil').focus();
+            if (!tramite || !tipoTramite) {
+                seccion.classList.add('hidden');
+                evaluarEstadoBotonEnviar();
                 return;
             }
 
-            const telefono = document.getElementById('telefono').value.trim();
-            if (telefono.length !== 10 || isNaN(telefono)) {
-                alert("El número de celular/teléfono debe contener exactamente 10 dígitos.");
-                document.getElementById('telefono').focus();
-                return;
+            seccion.classList.remove('hidden');
+
+            let requisitos = [];
+
+            const esTituloOCertificacion = tramite === 'Título Digital' || tramite === 'Certificación Técnico Profesional Nivel 3';
+            const esAnaliticoOIntermedia = tramite.indexOf('Analítico') !== -1 || tramite === 'Certificación Intermedia';
+
+            if (esTituloOCertificacion) {
+                requisitos = [
+                    "1-Partida de Nacimiento (Actualizada)",
+                    "2-Copia DNI (Frente y Dorso)",
+                    "3-Certificado Analítico de Estudios Secundarios, frente y dorso. No se aceptan diplomas.",
+                    "4-Constancia de CUIL",
+                    "5-Comprobante de Pago"
+                ];
+                if (tipoTramite === 'Duplicado' || tipoTramite === 'Triplicado') {
+                    requisitos.push("6-Denuncia de Extravío");
+                }
+            } else if (esAnaliticoOIntermedia) {
+                requisitos = [
+                    "1-Copia DNI (Frente y Dorso)",
+                    "2-Partida de Nacimiento",
+                    "3-Certificado Analítico de Estudios Secundarios, frente y dorso. No se aceptan diplomas.",
+                    "4-Comprobante de Pago"
+                ];
+                if (tipoTramite === 'Duplicado' || tipoTramite === 'Triplicado') {
+                    requisitos.push("5-Denuncia de Extravío");
+                }
             }
 
-            document.getElementById('btnEnviar').disabled = true;
-            document.getElementById('loading').classList.remove('hidden');
+            requisitos.forEach((etiqueta, idx) => {
+                const idField = 'file_' + idx;
+                archivosValidados[idField] = false;
 
-            processFiles().then(fileData => {
-                const payload = {
-                    cuil: cuil,
-                    tipoDocumento: document.getElementById('tipoDocumento').value,
-                    documento: document.getElementById('documento').value.trim(),
-                    apellido: document.getElementById('apellido').value.trim().toUpperCase(),
-                    nombres: document.getElementById('nombres').value.trim().toUpperCase(),
-                    genero: document.getElementById('genero').value,
-                    fechaNacimiento: document.getElementById('fechaNacimiento').value,
-                    lugarNacimiento: document.getElementById('lugarNacimiento').value.trim().toUpperCase(),
-                    provincia: document.getElementById('provincia').value.trim().toUpperCase(),
-                    nacionalidad: document.getElementById('nacionalidad').value.trim().toUpperCase(),
-                    email: email,
-                    telefono: telefono,
-                    sedeSeleccionada: document.getElementById('sedeSeleccionada').value,
-                    Tramite: document.getElementById('Tramite').value,
-                    tipoTramite: document.getElementById('tipoTramite').value,
-                    carrera: document.getElementById('carrera').value,
-                    archivoDni: fileData.dni,
-                    nombreArchivoDni: fileData.nombreDni,
-                    archivoTitulo: fileData.titulo,
-                    nombreArchivoTitulo: fileData.nombreTitulo,
-                    archivoOtros: fileData.otros,
-                    nombreArchivoOtros: fileData.nombreArchivoOtros
-                };
-
-                // URL DE GOOGLE APPS SCRIPT
-                const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw9TESzp4IS1WOhZEWEEke2bOciQk5wD7IWBuma8VXUZQdgfXgu1ip-4mbCBdTZ9dJUnQ/exec";
-
-                fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload)
-                })
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('btnEnviar').disabled = false;
-                    document.getElementById('loading').classList.add('hidden');
-
-                    if (data.status === "success") {
-                        alert("¡Solicitud enviada con éxito!");
-                        document.getElementById('solicitudForm').reset();
-                    } else {
-                        alert("Error del servidor: " + data.message);
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert("Hubo un error de conexión con el servidor.");
-                    document.getElementById('btnEnviar').disabled = false;
-                    document.getElementById('loading').classList.add('hidden');
-                });
+                const div = document.createElement('div');
+                div.className = "p-3 border rounded-xl bg-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-2";
+                div.innerHTML = `
+                    <div class="flex-1">
+                        <label class="block text-xs font-bold text-slate-700">${etiqueta} *</label>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input type="file" id="${idField}" accept="application/pdf" onchange="validarArchivo('${idField}', '${etiqueta}')" class="text-xs text-slate-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                        <span id="icon_${idField}" class="text-lg text-slate-300">
+                            <i class="fa-solid fa-circle-xmark text-red-400"></i>
+                        </span>
+                    </div>
+                `;
+                contenedor.appendChild(div);
             });
-        });
 
-        function convertFileToBase64(file) {
+            evaluarEstadoBotonEnviar();
+        }
+
+        function validarArchivo(idField, etiqueta) {
+            const fileInput = document.getElementById(idField);
+            const iconSpan = document.getElementById('icon_' + idField);
+            const file = fileInput.files[0];
+
+            if (!file) {
+                archivosValidados[idField] = false;
+                iconSpan.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-400"></i>';
+                evaluarEstadoBotonEnviar();
+                return;
+            }
+
+            // Validar extensión PDF
+            if (file.type !== 'application/pdf') {
+                alert('El archivo debe estar estrictamente en formato PDF.');
+                fileInput.value = '';
+                archivosValidados[idField] = false;
+                iconSpan.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-400"></i>';
+                evaluarEstadoBotonEnviar();
+                return;
+            }
+
+            // Validar peso menor a 1MB (1048576 bytes)
+            if (file.size > 1048576) {
+                alert('El archivo "' + file.name + '" supera el límite máximo de 1 MB.');
+                fileInput.value = '';
+                archivosValidados[idField] = false;
+                iconSpan.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-400"></i>';
+                evaluarEstadoBotonEnviar();
+                return;
+            }
+
+            // Si cumple todas las condiciones:
+            archivosValidados[idField] = true;
+            iconSpan.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-500"></i>';
+            evaluarEstadoBotonEnviar();
+        }
+
+        function evaluarEstadoBotonEnviar() {
+            const btn = document.getElementById('btnEnviar');
+            const totalCampos = Object.keys(archivosValidados).length;
+            const todosValidos = totalCampos > 0 && Object.values(archivosValidados).every(val => val === true);
+
+            if (todosValidos) {
+                btn.disabled = false;
+                btn.className = "w-full py-3.5 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 cursor-pointer transition-all duration-200";
+            } else {
+                btn.disabled = true;
+                btn.className = "w-full py-3.5 bg-slate-300 text-slate-500 font-bold rounded-xl shadow cursor-not-allowed transition-all duration-200";
+            }
+        }
+
+        async function enviarFormulario(e) {
+            e.preventDefault();
+            document.getElementById('spinnerCarga').classList.remove('hidden');
+
+            const datosForm = {
+                cuil: document.getElementById('cuil').value,
+                legajo: document.getElementById('legajo').value,
+                tipoDoc: document.getElementById('tipoDoc').value,
+                documento: document.getElementById('documento').value,
+                apellido: document.getElementById('apellido').value,
+                nombres: document.getElementById('nombres').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                sede: document.getElementById('sede').value,
+                carrera: document.getElementById('carrera').value,
+                tramite: document.getElementById('tramite').value,
+                tipoTramite: document.getElementById('tipoTramite').value
+            };
+
+            const listaArchivos = [];
+            const keys = Object.keys(archivosValidados);
+
+            for (let idField of keys) {
+                const input = document.getElementById(idField);
+                const file = input.files[0];
+                const etiquetaLabel = input.closest('div.p-3').querySelector('label').innerText;
+
+                const base64 = await convertirABase64(file);
+                listaArchivos.push({
+                    nombre: file.name,
+                    etiqueta: etiquetaLabel,
+                    base64: base64
+                });
+            }
+
+            // Enviar datos vía POST al script de Apps Script
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ datosForm: datosForm, archivos: listaArchivos })
+            })
+            .then(() => {
+                document.getElementById('spinnerCarga').classList.add('hidden');
+                // Estimamos ID visual como respuesta confirmada
+                const prefijo = datosForm.sede === 'Uspallata' ? 'U' : 'C';
+                const tipoLetra = (datosForm.tramite.indexOf('Analítico') !== -1 || datosForm.tramite.indexOf('Intermedia') !== -1) ? 'A' : 'T';
+                
+                document.getElementById('lblIdTramite').innerText = `${prefijo}-${datosForm.legajo}-1${tipoLetra}`;
+                document.getElementById('modalExito').classList.remove('hidden');
+            })
+            .catch(err => {
+                document.getElementById('spinnerCarga').classList.add('hidden');
+                alert("Ocurrió un error al enviar la solicitud: " + err);
+            });
+        }
+
+        function convertirABase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -298,69 +399,6 @@
                 reader.onerror = error => reject(error);
             });
         }
-
-        async function processFiles() {
-            const dniFile = document.getElementById('archivoDni').files[0];
-            const tituloFile = document.getElementById('archivoTitulo').files[0];
-            const otrosFile = document.getElementById('archivoOtros').files[0];
-
-            return {
-                dni: dniFile ? await convertFileToBase64(dniFile) : null,
-                nombreDni: dniFile ? dniFile.name : null,
-                titulo: tituloFile ? await convertFileToBase64(tituloFile) : null,
-                nombreTitulo: tituloFile ? tituloFile.name : null,
-                otros: otrosFile ? await convertFileToBase64(otrosFile) : null,
-                nombreArchivoOtros: otrosFile ? otrosFile.name : null
-            };
-        }
     </script>
-    
-    <!-- AQUÍ PEGAS EL NUEVO BLOQUE COMPLETO DE CÓDIGO -->
-    <script>
-        // Reemplaza esta URL por la URL pública desplegada de tu Web App en Apps Script
-        const URL_WEB_APP = "https://script.google.com/macros/s/AKfycbwyqJFaZE4rl_HRsT9Gnuos1ald4qujjHHHBV-_cY28k7Ijyl8bs5K9L_beVnJn5q3lKQ/execc";
-
-        window.addEventListener('DOMContentLoaded', () => {
-            cargarOpcionesDinamicas();
-        });
-
-        function cargarOpcionesDinamicas() {
-            fetch(URL_WEB_APP + "?action=getPublicConfig")
-                .then(res => res.json())
-                .then(data => {
-                    if(data.status === 'success') {
-                        
-                        // 1. Cargar Sedes activas
-                        const selectSede = document.getElementById('sedeSeleccionada');
-                        if(selectSede && data.sedes) {
-                            selectSede.innerHTML = '';
-                            data.sedes.filter(s => s.estado === 'Activo').forEach(s => {
-                                selectSede.add(new Option(s.nombre, s.nombre));
-                            });
-                        }
-
-                        // 2. Cargar Carreras activas
-                        const selectCarrera = document.getElementById('carrera');
-                        if(selectCarrera && data.carreras) {
-                            selectCarrera.innerHTML = '';
-                            data.carreras.filter(c => c.estado === 'Activo').forEach(c => {
-                                selectCarrera.add(new Option(c.nombre, c.nombre));
-                            });
-                        }
-
-                        // 3. Cargar Trámites activos
-                        const selectTramite = document.getElementById('Tramite');
-                        if(selectTramite && data.tramites) {
-                            selectTramite.innerHTML = '';
-                            data.tramites.filter(t => t.estado === 'Activo').forEach(t => {
-                                selectTramite.add(new Option(t.nombre, t.nombre));
-                            });
-                        }
-                    }
-                })
-                .catch(err => console.log("Cargando opciones locales por defecto...", err));
-        }
-    </script>
-
 </body>
 </html>

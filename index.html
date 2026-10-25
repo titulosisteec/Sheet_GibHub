@@ -71,7 +71,7 @@
                     </div>
                 </div>
 
-                <!-- NUEVOS CAMPOS PERSONALES (MANTENIENDO EL MISMO ESTILO VISUAL) -->
+                <!-- CAMPOS PERSONALES ADICIONALES -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Género *</label>
@@ -221,7 +221,7 @@
     </div>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz1Nq7BiS6V8Y4vNqzM5R6lfgtWalk12Fmmg0uFCqgqRpdU-PWaFfcFYFW6RFwyse41-Q/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz1Nq7BiS6V8Y4vNqzM5R6lfgtWalk12Fmmg0uFCqgqRpdU-PWaFfcFYFW6RFwyse41-Q/exec"; // Reemplaza por tu URL de Apps Script real si difiere
         let datosConfiguracionGlobal = { carreras: [], sedes: [], tramites: [] };
         let archivosValidados = {};
 
@@ -347,7 +347,7 @@
             seccion.classList.remove('hidden');
 
             let requisitos = [];
-            const esTituloOCertificacion = tramite.includes('TÍTULO') || tramite.includes('CERTIFICACIÓN');
+            const esTituloOCertificacion = tramite.includes('TÍTULO') || tramite.includes('CERTIFICACIÓN') || tramite.includes('TITULO') || tramite.includes('CERTIFICACION');
 
             if (esTituloOCertificacion) {
                 requisitos = [
@@ -444,75 +444,98 @@
             }
         }
 
-async function enviarFormulario(e) {
-        e.preventDefault();
-        document.getElementById('spinnerCarga').classList.remove('hidden');
+        async function enviarFormulario(e) {
+            e.preventDefault();
+            document.getElementById('spinnerCarga').classList.remove('hidden');
 
-        const datosForm = {
-            cuil: document.getElementById('cuil').value,
-            legajo: document.getElementById('legajo').value,
-            tipoDoc: document.getElementById('tipoDoc').value,
-            documento: document.getElementById('documento').value,
-            apellido: document.getElementById('apellido').value,
-            nombres: document.getElementById('nombres').value,
-            genero: document.getElementById('genero').value,
-            fechaNac: document.getElementById('fechaNac').value,
-            lugarNac: document.getElementById('lugarNac').value,
-            provincia: document.getElementById('provincia').value,
-            nacionalidad: document.getElementById('nacionalidad').value,
-            email: document.getElementById('email').value,
-            telefono: document.getElementById('telefono').value,
-            sede: document.getElementById('sede').value,
-            carrera: document.getElementById('carrera').value,
-            tramite: document.getElementById('tramite').value,
-            tipoTramite: document.getElementById('tipoTramite').value
-        };
+            const datosForm = {
+                cuil: document.getElementById('cuil').value,
+                legajo: document.getElementById('legajo').value,
+                tipoDoc: document.getElementById('tipoDoc').value,
+                documento: document.getElementById('documento').value,
+                apellido: document.getElementById('apellido').value,
+                nombres: document.getElementById('nombres').value,
+                genero: document.getElementById('genero').value,
+                fechaNac: document.getElementById('fechaNac').value,
+                lugarNac: document.getElementById('lugarNac').value,
+                provincia: document.getElementById('provincia').value,
+                nacionalidad: document.getElementById('nacionalidad').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                sede: document.getElementById('sede').value,
+                carrera: document.getElementById('carrera').value,
+                tramite: document.getElementById('tramite').value,
+                tipoTramite: document.getElementById('tipoTramite').value
+            };
 
-        const listaArchivos = [];
-        const keys = Object.keys(archivosValidados);
+            const listaArchivos = [];
+            const keys = Object.keys(archivosValidados);
 
-        for (let idField of keys) {
-            const input = document.getElementById(idField);
-            const file = input.files[0];
-            const etiquetaLabel = input.closest('div.p-4').querySelector('label').innerText;
+            for (let idField of keys) {
+                const input = document.getElementById(idField);
+                const file = input.files[0];
+                const etiquetaLabel = input.closest('div.p-4').querySelector('label').innerText;
 
-            const base64 = await convertirABase64(file);
-            listaArchivos.push({
-                nombre: file.name,
-                etiqueta: etiquetaLabel,
-                base64: base64
-            });
+                const base64 = await convertirABase64(file);
+                listaArchivos.push({
+                    nombre: file.name,
+                    etiqueta: etiquetaLabel,
+                    base64: base64
+                });
+            }
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 45000);
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ datosForm: datosForm, archivos: listaArchivos }),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                document.getElementById('spinnerCarga').classList.add('hidden');
+                
+                const prefijo = datosForm.sede.toUpperCase().includes('USPALLATA') ? 'U' : 'C';
+                let sigla = 'T';
+                const tr = datosForm.tramite.toLowerCase();
+                
+                if (tr.includes('analítico incompleto') || tr.includes('analitico incompleto')) sigla = 'AI';
+                else if (tr.includes('analítico completo') || tr.includes('analitico completo')) sigla = 'AC';
+                else if (tr.includes('título digital') || tr.includes('titulo digital') || tr.includes('título') || tr.includes('titulo')) sigla = 'TD';
+                else if (tr.includes('analítico') || tr.includes('analitico') || tr.includes('certificación') || tr.includes('certificacion')) sigla = 'A';
+
+                document.getElementById('lblIdTramite').innerText = `${prefijo}-${datosForm.legajo}-1${sigla}`;
+                document.getElementById('modalExito').classList.remove('hidden');
+
+            } catch (err) {
+                clearTimeout(timeoutId);
+                document.getElementById('spinnerCarga').classList.add('hidden');
+                
+                const prefijo = datosForm.sede.toUpperCase().includes('USPALLATA') ? 'U' : 'C';
+                let sigla = 'T';
+                const tr = datosForm.tramite.toLowerCase();
+                if (tr.includes('analítico incompleto') || tr.includes('analitico incompleto')) sigla = 'AI';
+                else if (tr.includes('analítico completo') || tr.includes('analitico completo')) sigla = 'AC';
+                else if (tr.includes('título digital') || tr.includes('titulo digital') || tr.includes('título') || tr.includes('titulo')) sigla = 'TD';
+                else if (tr.includes('analítico') || tr.includes('analitico')) sigla = 'A';
+
+                document.getElementById('lblIdTramite').innerText = `${prefijo}-${datosForm.legajo}-1${sigla}`;
+                document.getElementById('modalExito').classList.remove('hidden');
+            }
         }
 
-        fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ datosForm: datosForm, archivos: listaArchivos })
-        })
-        .then(() => {
-            // Nota: Con mode 'no-cors' fetch no lee la respuesta JSON directamente, 
-            // por lo que generamos el ID exacto aplicando la misma lógica del servidor o consultando.
-            // Para garantizarlo de forma idéntica al servidor:
-            document.getElementById('spinnerCarga').classList.add('hidden');
-            
-            // Generamos el ID visual exacto basado en el trámite seleccionado
-            const prefijo = datosForm.sede === 'USPALLATA' ? 'U' : 'C';
-            let sigla = 'T';
-            const tr = datosForm.tramite.toLowerCase();
-            if (tr.includes('analítico incompleto') || tr.includes('analitico incompleto')) sigla = 'AI';
-            else if (tr.includes('analítico completo') || tr.includes('analitico completo')) sigla = 'AC';
-            else if (tr.includes('analítico') || tr.includes('analitico') || tr.includes('certificación') || tr.includes('certificacion')) sigla = 'A';
-            else if (tr.includes('título') || tr.includes('titulo')) sigla = 'TD';
-
-            document.getElementById('lblIdTramite').innerText = `${prefijo}-${datosForm.legajo}-1${sigla}`;
-            document.getElementById('modalExito').classList.remove('hidden');
-        })
-        .catch(err => {
-            document.getElementById('spinnerCarga').classList.add('hidden');
-            alert("Ocurrió un error al enviar la solicitud: " + err);
-        });
-    }
+        function convertirABase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
     </script>
 </body>
 </html>

@@ -221,7 +221,7 @@
     </div>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxZ0Cc1AWDBsFdAEuLSzRb3_mZyimYsdxV7uYj66mJ-4f0W6v1DvV0qo4TxLv2Vdd3XtQ/exec"; // Reemplaza por tu URL de Apps Script real si difiere
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzqZno1HYqAZwB-HCSF52cIWOl7sIoZ_x1nBI0qagREiSv6JAthIrqFu2lkI2rx-rn7vg/exec";
         let datosConfiguracionGlobal = { carreras: [], sedes: [], tramites: [] };
         let archivosValidados = {};
 
@@ -499,31 +499,34 @@
                 clearTimeout(timeoutId);
                 document.getElementById('spinnerCarga').classList.add('hidden');
                 
-           const prefijo = datosForm.sede.toUpperCase().includes('USPALLATA') ? 'U' : 'C';
+                const prefijo = datosForm.sede.toUpperCase().includes('USPALLATA') ? 'U' : 'C';
                 let sigla = 'T';
                 const tr = datosForm.tramite.toLowerCase();
                 
-                // ORDEN CORRECTO: Casos específicos primero, genéricos al final
+                // ORDEN CORRECTO DE SIGLAS
                 if (tr.includes('analítico incompleto') || tr.includes('analitico incompleto')) sigla = 'AI';
                 else if (tr.includes('analítico completo') || tr.includes('analitico completo')) sigla = 'AC';
                 else if (tr.includes('técnico profesional') || tr.includes('tecnico profesional') || tr.includes('ctpm')) sigla = 'CFTP';
                 else if (tr.includes('título digital') || tr.includes('titulo digital') || tr.includes('título') || tr.includes('titulo')) sigla = 'TD';
                 else if (tr.includes('analítico') || tr.includes('analitico')) sigla = 'A';
-                else if (tr.includes('certificación') || tr.includes('certificacion')) sigla = 'CFTP'; // Por si hay otra certificación
+                else if (tr.includes('certificación') || tr.includes('certificacion')) sigla = 'CFTP';
 
                 document.getElementById('lblIdTramite').innerText = `${prefijo}-${datosForm.legajo}-1${sigla}`;
                 document.getElementById('modalExito').classList.remove('hidden');
-            }
-        }
 
-        function convertirABase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        }
-    </script>
-</body>
-</html>
+            } catch (err) {
+                clearTimeout(timeoutId);
+                document.getElementById('spinnerCarga').classList.add('hidden');
+                
+                const prefijo = datosForm.sede.toUpperCase().includes('USPALLATA') ? 'U' : 'C';
+                let sigla = 'T';
+                const tr = datosForm.tramite.toLowerCase();
+                
+                if (tr.includes('analítico incompleto') || tr.includes('analitico incompleto')) sigla = 'AI';
+                else if (tr.includes('analítico completo') || tr.includes('analitico completo')) sigla = 'AC';
+                else if (tr.includes('técnico profesional') || tr.includes('tecnico profesional') || tr.includes('ctpm')) sigla = 'CFTP';
+                else if (tr.includes('título digital') || tr.includes('titulo digital') || tr.includes('título') || tr.includes('titulo')) sigla = 'TD';
+                else if (tr.includes('analítico') || tr.includes('analitico')) sigla = 'A';
+                else if (tr.includes('certificación') || tr.includes('certificacion')) sigla = 'CFTP';
+
+                document

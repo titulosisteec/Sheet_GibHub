@@ -499,31 +499,17 @@
                 clearTimeout(timeoutId);
                 document.getElementById('spinnerCarga').classList.add('hidden');
                 
-            const prefijo = datosForm.sede.toUpperCase().includes('USPALLATA') ? 'U' : 'C';
+           const prefijo = datosForm.sede.toUpperCase().includes('USPALLATA') ? 'U' : 'C';
                 let sigla = 'T';
                 const tr = datosForm.tramite.toLowerCase();
                 
-                // Detección dinámica de siglas según el trámite seleccionado por el usuario
+                // ORDEN CORRECTO: Casos específicos primero, genéricos al final
                 if (tr.includes('analítico incompleto') || tr.includes('analitico incompleto')) sigla = 'AI';
                 else if (tr.includes('analítico completo') || tr.includes('analitico completo')) sigla = 'AC';
                 else if (tr.includes('técnico profesional') || tr.includes('tecnico profesional') || tr.includes('ctpm')) sigla = 'CFTP';
                 else if (tr.includes('título digital') || tr.includes('titulo digital') || tr.includes('título') || tr.includes('titulo')) sigla = 'TD';
-                else if (tr.includes('analítico') || tr.includes('analitico') || tr.includes('certificación') || tr.includes('certificacion')) sigla = 'A';
-
-                document.getElementById('lblIdTramite').innerText = `${prefijo}-${datosForm.legajo}-1${sigla}`;
-                document.getElementById('modalExito').classList.remove('hidden');
-
-            } catch (err) {
-                clearTimeout(timeoutId);
-                document.getElementById('spinnerCarga').classList.add('hidden');
-                
-                const prefijo = datosForm.sede.toUpperCase().includes('USPALLATA') ? 'U' : 'C';
-                let sigla = 'T';
-                const tr = datosForm.tramite.toLowerCase();
-                if (tr.includes('analítico incompleto') || tr.includes('analitico incompleto')) sigla = 'AI';
-                else if (tr.includes('analítico completo') || tr.includes('analitico completo')) sigla = 'AC';
-                else if (tr.includes('título digital') || tr.includes('titulo digital') || tr.includes('título') || tr.includes('titulo')) sigla = 'TD';
                 else if (tr.includes('analítico') || tr.includes('analitico')) sigla = 'A';
+                else if (tr.includes('certificación') || tr.includes('certificacion')) sigla = 'CFTP'; // Por si hay otra certificación
 
                 document.getElementById('lblIdTramite').innerText = `${prefijo}-${datosForm.legajo}-1${sigla}`;
                 document.getElementById('modalExito').classList.remove('hidden');

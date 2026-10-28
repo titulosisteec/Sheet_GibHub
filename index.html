@@ -3,558 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitud de Trámites Académicos - ISTEEC</title>
+    <title>Solicitud de Trámites Académicos</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ÍCONOS MANTENIDOS INTACTOS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .uppercase-input { text-transform: uppercase; }
-        .lowercase-input { text-transform: lowercase; }
-    </style>
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen p-4 md:p-10">
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
 
-    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-100">
-        
-        <!-- ENCABEZADO INSTITUCIONAL -->
-        <div class="bg-indigo-900 text-white p-8 md:p-10 text-center space-y-3">
-            <h1 class="text-2xl md:text-4xl font-black tracking-tight">Formulario de Solicitud de Trámites</h1>
-            <p class="text-lg md:text-2xl font-bold text-indigo-200 tracking-wide">Títulos y Certificaciones ISTEEC N° 9-013</p>
-            <p class="text-base md:text-xl text-indigo-200 font-semibold flex items-center justify-center gap-2">
-                <i class="fa-solid fa-envelope text-indigo-300 text-2xl md:text-3xl"></i> titulos@isteec.edu.ar
-            </p>
-        </div>
+    <!-- ENCABEZADO -->
+    <header class="bg-indigo-900 text-white py-6 px-4 shadow-md text-center">
+        <h1 class="text-2xl font-bold">Gestión de Trámites Académicos</h1>
+        <p class="text-xs text-indigo-200 mt-1">Complete el formulario y adjunte la documentación requerida en formato PDF</p>
+    </header>
 
-        <!-- FORMULARIO -->
-        <form id="formAlumno" onsubmit="enviarFormulario(event)" class="p-8 md:p-12 space-y-8">
-            
-            <!-- DATOS PERSONALES -->
-            <div class="space-y-6">
-                <h2 class="text-xl font-extrabold text-slate-800 border-b-2 border-indigo-100 pb-3 flex items-center gap-3">
-                    <i class="fa-solid fa-user text-indigo-600 text-2xl"></i> Datos Personales
-                </h2>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-4xl w-full mx-auto p-4 md:p-6 my-6 bg-white rounded-2xl shadow-xl">
+        <form id="formTramite" onsubmit="enviarFormulario(event)" class="space-y-6">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- SECCIÓN: SEDE Y TRÁMITE -->
+            <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 space-y-4">
+                <h2 class="font-bold text-indigo-900 text-sm uppercase tracking-wider">1. Selección de Sede y Trámite</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">CUIL (11 dígitos) *</label>
-                        <input type="text" id="cuil" required maxlength="11" minlength="11" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 20123456789" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">N° de Legajo (4 dígitos) *</label>
-                        <input type="text" id="legajo" required maxlength="4" minlength="4" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 4521" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Tipo de Documento *</label>
-                        <select id="tipoDoc" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Seleccionar...</option>
-                            <option value="DNI">DNI</option>
-                            <option value="Pasaporte">PASAPORTE</option>
-                            <option value="Cédula">CÉDULA</option>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Sede *</label>
+                        <select id="sede" required class="w-full p-2.5 border rounded-lg bg-white text-sm focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Seleccione Sede...</option>
+                            <option value="Central">Sede Central</option>
+                            <option value="Uspallata">Sede Uspallata</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Número de Documento (7u 8 dígitos) *</label>
-                        <input type="text" id="documento" required maxlength="8" minlength="7" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 35123456" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Trámite a Solicitar *</label>
+                        <select id="tramite" required class="w-full p-2.5 border rounded-lg bg-white text-sm focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Seleccione Trámite...</option>
+                            <option value="Analítico Incompleto">Analítico Incompleto</option>
+                            <option value="Analítico Completo">Analítico Completo</option>
+                            <option value="Certificación Intermedia">Certificación Intermedia</option>
+                            <option value="Certificación Formación Técnico Profesional N3">Certificación Formación Técnico Profesional N3</option>
+                            <option value="Título Digital">Título Digital</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Apellido(s) *</label>
-                        <input type="text" id="apellido" required oninput="convertirMayusculas(this); validarFlujoProgresivo();" placeholder="PÉREZ" class="uppercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Tipo de Trámite *</label>
+                        <select id="tipoTramite" required class="w-full p-2.5 border rounded-lg bg-white text-sm focus:ring-2 focus:ring-indigo-500">
+                            <option value="Original">Original</option>
+                            <option value="Duplicado">Duplicado</option>
+                        </select>
                     </div>
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Nombre(s) *</label>
-                        <input type="text" id="nombres" required oninput="convertirMayusculas(this); validarFlujoProgresivo();" placeholder="JUAN" class="uppercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Carrera *</label>
+                        <select id="carrera" required class="w-full p-2.5 border rounded-lg bg-white text-sm focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Seleccione Carrera...</option>
+                            <option value="Profesorado de Educación Física">Profesorado de Educación Física</option>
+                            <option value="Tecnicatura Superior en Enfermería">Tecnicatura Superior en Enfermería</option>
+                            <option value="Tecnicatura Superior en Administración">Tecnicatura Superior en Administración</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: DATOS PERSONALES -->
+            <div class="space-y-4">
+                <h2 class="font-bold text-slate-700 text-sm uppercase tracking-wider border-b pb-2">2. Datos Personales</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Legajo *</label>
+                        <input type="text" id="legajo" required placeholder="Ej: 1234" class="w-full p-2.5 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Apellido *</label>
+                        <input type="text" id="apellido" required placeholder="Apellido" class="w-full p-2.5 border rounded-lg text-sm uppercase" oninput="this.value = this.value.toUpperCase()">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Nombres *</label>
+                        <input type="text" id="nombres" required placeholder="Nombres" class="w-full p-2.5 border rounded-lg text-sm capitalize">
                     </div>
                 </div>
 
-                <!-- CAMPOS PERSONALES ADICIONALES -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Género *</label>
-                        <select id="genero" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Tipo Doc *</label>
+                        <select id="tipoDoc" required class="w-full p-2.5 border rounded-lg bg-white text-sm">
+                            <option value="DNI">DNI</option>
+                            <option value="LE">LE</option>
+                            <option value="LC">LC</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">N° de Documento *</label>
+                        <input type="text" id="documento" required maxlength="8" minlength="7" placeholder="Sin puntos" class="w-full p-2.5 border rounded-lg text-sm" oninput="validarNumeros(this)">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">CUIL *</label>
+                        <input type="text" id="cuil" required placeholder="Ej: 20-12345678-9" class="w-full p-2.5 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Género *</label>
+                        <select id="genero" required class="w-full p-2.5 border rounded-lg bg-white text-sm">
                             <option value="">Seleccionar...</option>
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
                             <option value="Otro">Otro</option>
                         </select>
                     </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Fecha de Nacimiento *</label>
-                        <input type="date" id="fechaNac" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Fecha de Nacimiento *</label>
+                        <input type="date" id="fechaNac" required class="w-full p-2.5 border rounded-lg text-sm bg-white">
                     </div>
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Lugar de Nacimiento *</label>
-                        <input type="text" id="lugarNac" required oninput="convertirMayusculas(this); validarFlujoProgresivo();" placeholder="EJ: MENDOZA" class="uppercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Lugar de Nacimiento *</label>
+                        <input type="text" id="lugarNac" required placeholder="Ciudad / Localidad" class="w-full p-2.5 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Provincia *</label>
+                        <input type="text" id="provincia" required placeholder="Provincia" class="w-full p-2.5 border rounded-lg text-sm">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Provincia *</label>
-                        <input type="text" id="provincia" required oninput="convertirMayusculas(this); validarFlujoProgresivo();" placeholder="EJ: MENDOZA" class="uppercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Nacionalidad *</label>
+                        <input type="text" id="nacionalidad" required value="Argentina" class="w-full p-2.5 border rounded-lg text-sm">
                     </div>
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Nacionalidad *</label>
-                        <input type="text" id="nacionalidad" required oninput="convertirMayusculas(this); validarFlujoProgresivo();" placeholder="EJ: ARGENTINA" class="uppercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
-                    </div>
-                </div>
-            </div>
-
-            <!-- DATOS DE CONTACTO -->
-            <div class="space-y-6 pt-6 border-t-2 border-slate-100">
-                <h2 class="text-xl font-extrabold text-slate-800 border-b-2 border-indigo-100 pb-3 flex items-center gap-3">
-                    <i class="fa-solid fa-address-book text-indigo-600 text-2xl"></i> Datos de Contacto
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Correo Electrónico *</label>
-                        <input type="email" id="email" required oninput="convertirMinusculas(this); validarCoincidenciaEmail(); validarFlujoProgresivo();" placeholder="alumno@ejemplo.com" class="lowercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Correo Electrónico *</label>
+                        <input type="email" id="email" required placeholder="correo@ejemplo.com" class="w-full p-2.5 border rounded-lg text-sm">
                     </div>
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Confirmar Correo Electrónico *</label>
-                        <input type="email" id="confirmEmail" required oninput="convertirMinusculas(this); validarCoincidenciaEmail(); validarFlujoProgresivo();" placeholder="alumno@ejemplo.com" class="lowercase-input w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
-                        <p id="msgErrorEmail" class="text-xs text-red-600 font-bold mt-1.5 hidden"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Las direcciones de correo electrónico no coinciden.</p>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-1">Teléfono (10 dígitos) *</label>
-                    <p class="text-xs text-slate-500 font-medium mb-2">(Código de área sin 0 y número sin 15. Ej: 2611234567)</p>
-                    <input type="tel" id="telefono" required maxlength="10" minlength="10" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="2611234567" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
-                </div>
-            </div>
-
-            <!-- DATOS DEL TRÁMITE -->
-            <div id="bloqueTramite" class="space-y-6 pt-6 border-t-2 border-slate-100 opacity-50 pointer-events-none transition-all duration-300">
-                <h2 class="text-xl font-extrabold text-slate-800 border-b-2 border-indigo-100 pb-3 flex items-center gap-3">
-                    <i class="fa-solid fa-graduation-cap text-indigo-600 text-2xl"></i> Elección de Sede y Trámite
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Sede *</label>
-                        <select id="sede" required onchange="actualizarCarrerasDinamicas(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Cargando Sedes...</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Carrera *</label>
-                        <select id="carrera" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Seleccionar Sede primero...</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Trámite a Solicitar *</label>
-                        <select id="tramite" required onchange="actualizarOpcionesDocumentacion(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Cargando Trámites...</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Tipo de Emisión *</label>
-                        <select id="tipoTramite" required onchange="actualizarOpcionesDocumentacion(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Seleccionar Tipo...</option>
-                            <option value="ORIGINAL">ORIGINAL</option>
-                            <option value="DUPLICADO">DUPLICADO</option>
-                            <option value="TRIPLICADO">TRIPLICADO</option>
-                        </select>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Teléfono / Celular *</label>
+                        <input type="tel" id="telefono" required placeholder="Ej: 2614567890" class="w-full p-2.5 border rounded-lg text-sm" oninput="validarNumeros(this)">
                     </div>
                 </div>
             </div>
 
-            <!-- ADJUNTAR DOCUMENTACIÓN -->
-            <div id="seccionDocumentacion" class="space-y-6 pt-6 border-t-2 border-slate-100 hidden">
-                <h2 class="text-xl font-extrabold text-slate-800 border-b-2 border-indigo-100 pb-3 flex items-center gap-3">
-                    <i class="fa-solid fa-file-pdf text-indigo-600 text-2xl"></i> Documentación Obligatoria (Formato PDF)
-                </h2>
-
-                <div class="bg-amber-50 border-2 border-amber-200 text-amber-900 p-5 rounded-2xl text-sm md:text-base space-y-2 leading-relaxed">
-                    <p class="font-bold text-base md:text-lg"><i class="fa-solid fa-circle-info text-amber-600 mr-2"></i> Requisitos para la carga de archivos:</p>
-                    <p>• La documentación debe estar digitalizada en <strong>formato PDF</strong>.</p>
-                    <p>• Cada archivo debe pesar <strong>menos de 1 MB</strong>.</p>
-                    <p>• Podés comprimir o convertir archivos con <a href="https://www.ilovepdf.com/es" target="_blank" class="underline font-bold text-indigo-800 hover:text-indigo-900">iLovePDF</a> o digitalizarlos con <a href="https://www.camscanner.com/" target="_blank" class="underline font-bold text-indigo-800 hover:text-indigo-900">CamScanner</a>.</p>
+            <!-- SECCIÓN: DOCUMENTACIÓN REQUERIDA (SOLO PDF) -->
+            <div class="space-y-4">
+                <h2 class="font-bold text-slate-700 text-sm uppercase tracking-wider border-b pb-2">3. Adjuntar Documentación (Solo formato PDF)</h2>
+                
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                    <div>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">DNI (Anverso y Reverso) *</label>
+                        <input type="file" id="archDni" accept="application/pdf" required class="text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-indigo-100 file:text-indigo-800">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Constancia de CUIL *</label>
+                        <input type="file" id="archCuil" accept="application/pdf" required class="text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-indigo-100 file:text-indigo-800">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 text-xs mb-1">Partida de Nacimiento *</label>
+                        <input type="file" id="archPartida" accept="application/pdf" required class="text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-indigo-100 file:text-indigo-800">
+                    </div>
                 </div>
-
-                <div id="contenedorArchivos" class="space-y-4"></div>
             </div>
 
-            <!-- BOTÓN ENVIAR -->
-            <div class="pt-8">
-                <button type="submit" id="btnEnviar" disabled class="w-full py-4 text-lg md:text-xl bg-slate-300 text-slate-500 font-extrabold rounded-2xl shadow transition-all duration-200 cursor-not-allowed">
-                    Enviar Solicitud
+            <!-- BOTÓN DE ENVÍO -->
+            <div class="pt-4 text-center">
+                <button type="submit" id="btnEnviar" class="w-full md:w-auto px-8 py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 transition duration-200 text-base">
+                    Enviar Solicitud de Trámite
                 </button>
             </div>
         </form>
-    </div>
-
-    <!-- MODAL FLOTANTE DE ÉXITO -->
-    <div id="modalExito" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50">
-        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10 max-w-lg w-full text-center space-y-6">
-            <div class="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-5xl">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <h3 class="text-2xl md:text-3xl font-black text-slate-800">¡La solicitud del trámite ha sido enviada con éxito!</h3>
-            <p class="text-base text-slate-600">Se ha generado su solicitud bajo el N° de Trámite: <strong id="lblIdTramite" class="text-indigo-600 font-extrabold block text-2xl mt-2"></strong></p>
-            <p class="text-sm text-amber-800 bg-amber-50 p-4 rounded-xl border border-amber-200 text-left leading-relaxed">
-                <i class="fa-solid fa-clock mr-1 text-amber-600"></i> Su solicitud ha sido recibida y está <strong>sujeta a aprobación</strong> por el equipo administrativo. Se le envió un correo con el comprobante de su trámite.
-            </p>
-            <button onclick="window.location.reload()" class="w-full py-4 bg-emerald-600 text-white font-extrabold text-lg rounded-2xl shadow-lg hover:bg-emerald-700 transition">
-                Aceptar y Finalizar
-            </button>
-        </div>
-    </div>
+    </main>
 
     <!-- SPINNER DE CARGA -->
     <div id="spinnerCarga" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden flex flex-col justify-center items-center p-4 z-50 text-white space-y-4">
         <i class="fa-solid fa-circle-notch fa-spin text-6xl text-indigo-400"></i>
-        <p class="font-extrabold text-xl md:text-2xl">Procesando y subiendo archivos...</p>
-        <p class="text-sm text-slate-300">Por favor, no cierre esta pantalla.</p>
+        <p class="font-extrabold text-xl">Procesando solicitud y subiendo archivos...</p>
     </div>
 
+    <!-- MODAL DE ÉXITO -->
+    <div id="modalExito" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center space-y-4">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800">¡Solicitud Enviada con Éxito!</h3>
+            <p class="text-sm text-slate-600">Su trámite ha sido registrado correctamente bajo el número identificatorio:</p>
+            <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl font-mono text-indigo-700 font-bold text-lg" id="lblIdTramite">
+                C-0000-1T
+            </div>
+            <p class="text-xs text-slate-500">Se ha enviado un correo electrónico de confirmación con los detalles.</p>
+            <button onclick="location.reload()" class="w-full py-2.5 bg-emerald-600 text-white font-bold rounded-xl shadow hover:bg-emerald-700">Nuevo Trámite</button>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE ENVÍO Y CONFIGURACIÓN -->
     <script>
-        // REEMPLAZÁ ESTA URL POR LA URL DE TU IMPLEMENTACIÓN DE APPS SCRIPT
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwk1Jg7Kmz-WnMhQYs6WdRqi8P9egI4RwwWSaMjR6acBXanL13q-upZNk1Mfk7b1FKOiQ/exec";
-        let datosConfiguracionGlobal = { carreras: [], sedes: [], tramites: [] };
-        let archivosValidados = {};
+        // ==========================================
+        // PEGA AQUÍ TU URL DE APPS SCRIPT ENTRE COMILLAS
+        // ==========================================
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyqLyAM8noOtRF_BiBmFdl0W9nSPnXuW1zD1MvWnrOOCnBMoI5UlifQ8FPWOK7jal_U6A/exec";
 
-        window.onload = function() {
-            fetch(WEB_APP_URL + "?action=getConfig")
-                .then(res => res.json())
-                .then(data => {
-                    if(data.status === 'success') {
-                        datosConfiguracionGlobal = data;
-                        poblarSedesYTramites(data);
-                    }
-                })
-                .catch(err => {
-                    console.error("Error al cargar configuración:", err);
-                    // Opciones de respaldo inmediato si la conexión a Apps Script demora
-                    poblarOpcionesRespaldo();
-                });
-        };
-
-        function poblarSedesYTramites(data) {
-            const selectSede = document.getElementById('sede');
-            selectSede.innerHTML = '<option value="">Seleccionar Sede...</option>';
-            (data.sedes || []).filter(s => s.estado === 'Activo').forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s.nombre.toUpperCase();
-                opt.textContent = s.nombre.toUpperCase();
-                selectSede.appendChild(opt);
-            });
-
-            const selectTramite = document.getElementById('tramite');
-            selectTramite.innerHTML = '<option value="">Seleccionar Trámite...</option>';
-            (data.tramites || []).filter(t => t.estado === 'Activo').forEach(t => {
-                const opt = document.createElement('option');
-                opt.value = t.nombre.toUpperCase();
-                opt.textContent = t.nombre.toUpperCase();
-                selectTramite.appendChild(opt);
-            });
+        function validarNumeros(input) {
+            input.value = input.value.replace(/[^0-9]/g, '');
         }
 
-        function poblarOpcionesRespaldo() {
-            const selectSede = document.getElementById('sede');
-            selectSede.innerHTML = '<option value="">Seleccionar Sede...</option><option value="CENTRAL">CENTRAL</option><option value="USPALLATA">USPALLATA</option>';
+        function calcularSiglaFront(tramiteStr) {
+            if (!tramiteStr) return 'T';
+            const tr = tramiteStr.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 
-            const selectTramite = document.getElementById('tramite');
-            selectTramite.innerHTML = '<option value="">Seleccionar Trámite...</option><option value="SOLICITUD DE TÍTULO DIGITAL">SOLICITUD DE TÍTULO DIGITAL</option><option value="SOLICITUD DE ANALÍTICO COMPLETO">SOLICITUD DE ANALÍTICO COMPLETO</option><option value="SOLICITUD DE ANALÍTICO INCOMPLETO">SOLICITUD DE ANALÍTICO INCOMPLETO</option><option value="CERTIFICACIÓN TÉCNICO PROFESIONAL">CERTIFICACIÓN TÉCNICO PROFESIONAL</option>';
-        }
+            if (tr.includes('incompleto')) return 'AI';
+            if (tr.includes('analitico completo') || tr.includes('analitico compl')) return 'AC';
+            if (tr.includes('intermedia')) return 'CI';
+            if (tr.includes('tecnico profesional') || tr.includes('formacion tecnico') || tr.includes('cftp') || tr.includes('ctpm') || tr.includes('certificacion')) return 'CFTP';
+            if (tr.includes('titulo digital') || tr.includes('titulo')) return 'TD';
 
-        function actualizarCarrerasDinamicas() {
-            const sedeSeleccionada = document.getElementById('sede').value;
-            const selectCarrera = document.getElementById('carrera');
-            selectCarrera.innerHTML = '<option value="">Seleccionar Carrera...</option>';
-
-            const carrerasActivas = (datosConfiguracionGlobal.carreras || []).filter(c => c.estado === 'Activo' && c.extra.toUpperCase() === sedeSeleccionada);
-            
-            if (carrerasActivas.length > 0) {
-                carrerasActivas.forEach(c => {
-                    const opt = document.createElement('option');
-                    opt.value = c.nombre.toUpperCase();
-                    opt.textContent = c.nombre.toUpperCase();
-                    selectCarrera.appendChild(opt);
-                });
-            } else {
-                // Opciones base de respaldo por si falla la lista dinámica
-                const carrerasBase = ["TECNICATURA SUPERIOR EN HIGIENE Y SEGURIDAD", "TECNICATURA SUPERIOR EN ENERGÍAS RENOVABLES", "TECNICATURA SUPERIOR EN GESTIÓN DE EMPRESAS", "TECNICATURA SUPERIOR EN LOGÍSTICA"];
-                carrerasBase.forEach(cb => {
-                    const opt = document.createElement('option');
-                    opt.value = cb;
-                    opt.textContent = cb;
-                    selectCarrera.appendChild(opt);
-                });
-            }
-        }
-
-        function convertirMayusculas(input) { input.value = input.value.toUpperCase(); }
-        function convertirMinusculas(input) { input.value = input.value.toLowerCase(); }
-        function validarSoloNumeros(input) { input.value = input.value.replace(/[^0-9]/g, ''); }
-
-        function validarCoincidenciaEmail() {
-            const email = document.getElementById('email').value.trim();
-            const confirmEmail = document.getElementById('confirmEmail').value.trim();
-            const msgError = document.getElementById('msgErrorEmail');
-
-            if (confirmEmail.length > 0 && email !== confirmEmail) {
-                msgError.classList.remove('hidden');
-                return false;
-            } else {
-                msgError.classList.add('hidden');
-                return email.length > 0 && email === confirmEmail;
-            }
-        }
-
-        function validarFlujoProgresivo() {
-            const cuil = document.getElementById('cuil').value.trim();
-            const legajo = document.getElementById('legajo').value.trim();
-            const tipoDoc = document.getElementById('tipoDoc').value;
-            const documento = document.getElementById('documento').value.trim();
-            const apellido = document.getElementById('apellido').value.trim();
-            const nombres = document.getElementById('nombres').value.trim();
-            const genero = document.getElementById('genero').value;
-            const fechaNac = document.getElementById('fechaNac').value;
-            const lugarNac = document.getElementById('lugarNac').value.trim();
-            const provincia = document.getElementById('provincia').value.trim();
-            const nacionalidad = document.getElementById('nacionalidad').value.trim();
-            const emailValido = validarCoincidenciaEmail();
-            const telefono = document.getElementById('telefono').value.trim();
-
-            const datosCompletos = cuil.length === 11 && 
-                                  legajo.length === 4 && 
-                                  tipoDoc !== "" && 
-                                  documento.length >= 7 && 
-                                  apellido !== "" && 
-                                  nombres !== "" && 
-                                  genero !== "" &&
-                                  fechaNac !== "" &&
-                                  lugarNac !== "" &&
-                                  provincia !== "" &&
-                                  nacionalidad !== "" &&
-                                  emailValido && 
-                                  telefono.length === 10;
-
-            const bloqueTramite = document.getElementById('bloqueTramite');
-
-            if (datosCompletos) {
-                bloqueTramite.classList.remove('opacity-50', 'pointer-events-none');
-            } else {
-                bloqueTramite.classList.add('opacity-50', 'pointer-events-none');
-            }
-
-            evaluarEstadoBotonEnviar();
-        }
-
-        function actualizarOpcionesDocumentacion() {
-            const tramite = document.getElementById('tramite').value;
-            const tipoTramite = document.getElementById('tipoTramite').value;
-            const seccion = document.getElementById('seccionDocumentacion');
-            const contenedor = document.getElementById('contenedorArchivos');
-
-            contenedor.innerHTML = '';
-            archivosValidados = {};
-
-            if (!tramite || !tipoTramite) {
-                seccion.classList.add('hidden');
-                evaluarEstadoBotonEnviar();
-                return;
-            }
-
-            seccion.classList.remove('hidden');
-
-            let requisitos = [];
-            const esTituloOCertificacion = tramite.includes('TÍTULO') || tramite.includes('CERTIFICACIÓN') || tramite.includes('TITULO') || tramite.includes('CERTIFICACION');
-
-            if (esTituloOCertificacion) {
-                requisitos = [
-                    "1-PARTIDA DE NACIMIENTO (ACTUALIZADA)",
-                    "2-COPIA DNI (FRENTE Y DORSO)",
-                    "3-CERTIFICADO ANALÍTICO DE ESTUDIOS SECUNDARIOS, FRENTE Y DORSO. NO SE ACEPTAN DIPLOMAS.",
-                    "4-CONSTANCIA DE CUIL",
-                    "5-COMPROBANTE DE PAGO"
-                ];
-                if (tipoTramite === 'DUPLICADO' || tipoTramite === 'TRIPLICADO') {
-                    requisitos.push("6-DENUNCIA DE EXTRAVÍO");
-                }
-            } else {
-                requisitos = [
-                    "1-COPIA DNI (FRENTE Y DORSO)",
-                    "2-PARTIDA DE NACIMIENTO",
-                    "3-CERTIFICADO ANALÍTICO DE ESTUDIOS SECUNDARIOS, FRENTE Y DORSO. NO SE ACEPTAN DIPLOMAS.",
-                    "4-COMPROBANTE DE PAGO"
-                ];
-                if (tipoTramite === 'DUPLICADO' || tipoTramite === 'TRIPLICADO') {
-                    requisitos.push("5-DENUNCIA DE EXTRAVÍO");
-                }
-            }
-
-            requisitos.forEach((etiqueta, idx) => {
-                const idField = 'file_' + idx;
-                archivosValidados[idField] = false;
-
-                const div = document.createElement('div');
-                div.className = "p-4 border-2 border-slate-200 rounded-2xl bg-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-3";
-                div.innerHTML = `
-                    <div class="flex-1">
-                        <label class="block text-sm md:text-base font-bold text-slate-800">${etiqueta} *</label>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <input type="file" id="${idField}" accept="application/pdf" onchange="validarArchivo('${idField}')" class="text-sm text-slate-600 file:mr-3 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-indigo-100 file:text-indigo-800 hover:file:bg-indigo-200">
-                        <span id="icon_${idField}" class="text-2xl text-slate-300">
-                            <i class="fa-solid fa-circle-xmark text-red-500"></i>
-                        </span>
-                    </div>
-                `;
-                contenedor.appendChild(div);
-            });
-
-            evaluarEstadoBotonEnviar();
-        }
-
-        function validarArchivo(idField) {
-            const fileInput = document.getElementById(idField);
-            const iconSpan = document.getElementById('icon_' + idField);
-            const file = fileInput.files[0];
-
-            if (!file) {
-                archivosValidados[idField] = false;
-                iconSpan.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-500"></i>';
-                evaluarEstadoBotonEnviar();
-                return;
-            }
-
-            if (file.type !== 'application/pdf') {
-                alert('El archivo debe estar strictly en formato PDF.');
-                fileInput.value = '';
-                archivosValidados[idField] = false;
-                iconSpan.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-500"></i>';
-                evaluarEstadoBotonEnviar();
-                return;
-            }
-
-            if (file.size > 1048576) {
-                alert('El archivo "' + file.name + '" supera el límite máximo de 1 MB.');
-                fileInput.value = '';
-                archivosValidados[idField] = false;
-                iconSpan.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-500"></i>';
-                evaluarEstadoBotonEnviar();
-                return;
-            }
-
-            archivosValidados[idField] = true;
-            iconSpan.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-500"></i>';
-            evaluarEstadoBotonEnviar();
-        }
-
-        function evaluarEstadoBotonEnviar() {
-            const btn = document.getElementById('btnEnviar');
-            const totalCampos = Object.keys(archivosValidados).length;
-            const todosValidos = totalCampos > 0 && Object.values(archivosValidados).every(val => val === true);
-
-            if (todosValidos) {
-                btn.disabled = false;
-                btn.className = "w-full py-4 text-lg md:text-xl bg-indigo-600 text-white font-extrabold rounded-2xl shadow-xl hover:bg-indigo-700 cursor-pointer transition-all duration-200";
-            } else {
-                btn.disabled = true;
-                btn.className = "w-full py-4 text-lg md:text-xl bg-slate-300 text-slate-500 font-extrabold rounded-2xl shadow transition-all duration-200 cursor-not-allowed";
-            }
+            return 'T';
         }
 
         async function enviarFormulario(e) {
             e.preventDefault();
-            document.getElementById('spinnerCarga').classList.remove('hidden');
-
-            const datosForm = {
-                cuil: document.getElementById('cuil').value,
-                legajo: document.getElementById('legajo').value,
-                tipoDoc: document.getElementById('tipoDoc').value,
-                documento: document.getElementById('documento').value,
-                apellido: document.getElementById('apellido').value,
-                nombres: document.getElementById('nombres').value,
-                genero: document.getElementById('genero').value,
-                fechaNac: document.getElementById('fechaNac').value,
-                lugarNac: document.getElementById('lugarNac').value,
-                provincia: document.getElementById('provincia').value,
-                nacionalidad: document.getElementById('nacionalidad').value,
-                email: document.getElementById('email').value,
-                telefono: document.getElementById('telefono').value,
-                sede: document.getElementById('sede').value,
-                carrera: document.getElementById('carrera').value,
-                tramite: document.getElementById('tramite').value,
-                tipoTramite: document.getElementById('tipoTramite').value
-            };
-
-            const listaArchivos = [];
-            const keys = Object.keys(archivosValidados);
-
-            for (let idField of keys) {
-                const input = document.getElementById(idField);
-                const file = input.files[0];
-                const etiquetaLabel = input.closest('div.p-4').querySelector('label').innerText;
-
-                const base64 = await convertirABase64(file);
-                listaArchivos.push({
-                    nombre: file.name,
-                    etiqueta: etiquetaLabel,
-                    base64: base64
-                });
+            
+            if (!WEB_APP_URL || WEB_APP_URL.includes("TU_URL")) {
+                alert("Por favor, configure la constante WEB_APP_URL en el código con la URL de su Web App de Apps Script.");
+                return;
             }
 
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 45000);
+            document.getElementById('spinnerCarga').classList.remove('hidden');
 
             try {
+                const datosForm = {
+                    sede: document.getElementById('sede').value,
+                    tramite: document.getElementById('tramite').value,
+                    tipoTramite: document.getElementById('tipoTramite').value,
+                    carrera: document.getElementById('carrera').value,
+                    legajo: document.getElementById('legajo').value,
+                    apellido: document.getElementById('apellido').value,
+                    nombres: document.getElementById('nombres').value,
+                    tipoDoc: document.getElementById('tipoDoc').value,
+                    documento: document.getElementById('documento').value,
+                    cuil: document.getElementById('cuil').value,
+                    genero: document.getElementById('genero').value,
+                    fechaNac: document.getElementById('fechaNac').value,
+                    lugarNac: document.getElementById('lugarNac').value,
+                    provincia: document.getElementById('provincia').value,
+                    nacionalidad: document.getElementById('nacionalidad').value,
+                    email: document.getElementById('email').value,
+                    telefono: document.getElementById('telefono').value
+                };
+
+                const archivos = [];
+                const archDni = document.getElementById('archDni').files[0];
+                const archCuil = document.getElementById('archCuil').files[0];
+                const archPartida = document.getElementById('archPartida').files[0];
+
+                if (archDni) archivos.push({ etiqueta: 'DNI', nombre: archDni.name, base64: await convertirABase64(archDni) });
+                if (archCuil) archivos.push({ etiqueta: 'CUIL', nombre: archCuil.name, base64: await convertirABase64(archCuil) });
+                if (archPartida) archivos.push({ etiqueta: 'PartidaNacimiento', nombre: archPartida.name, base64: await convertirABase64(archPartida) });
+
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ datosForm: datosForm, archivos: listaArchivos }),
-                    signal: controller.signal
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ datosForm: datosForm, archivos: archivos })
                 });
-                
-                clearTimeout(timeoutId);
+
                 document.getElementById('spinnerCarga').classList.add('hidden');
                 
                 const prefijo = datosForm.sede.toUpperCase().includes('USPALLATA') ? 'U' : 'C';
-                let sigla = 'T';
-                const tr = datosForm.tramite.toLowerCase();
+                const sigla = calcularSiglaFront(datosForm.tramite);
                 
-                if (tr.includes('analítico incompleto') || tr.includes('analitico incompleto')) sigla = 'AI';
-                else if (tr.includes('analítico completo') || tr.includes('analitico completo')) sigla = 'AC';
-                else if (tr.includes('técnico profesional') || tr.includes('tecnico profesional') || tr.includes('ctpm')) sigla = 'CFTP';
-                else if (tr.includes('título digital') || tr.includes('titulo digital') || tr.includes('título') || tr.includes('titulo')) sigla = 'TD';
-                else if (tr.includes('analítico') || tr.includes('analitico')) sigla = 'A';
-                else if (tr.includes('certificación') || tr.includes('certificacion')) sigla = 'CFTP';
-
                 document.getElementById('lblIdTramite').innerText = `${prefijo}-${datosForm.legajo}-1${sigla}`;
                 document.getElementById('modalExito').classList.remove('hidden');
 
             } catch (err) {
-                clearTimeout(timeoutId);
                 document.getElementById('spinnerCarga').classList.add('hidden');
-                
-                const prefijo = datosForm.sede.toUpperCase().includes('USPALLATA') ? 'U' : 'C';
-                let sigla = 'T';
-                const tr = datosForm.tramite.toLowerCase();
-                
-                if (tr.includes('analítico incompleto') || tr.includes('analitico incompleto')) sigla = 'AI';
-                else if (tr.includes('analítico completo') || tr.includes('analitico completo')) sigla = 'AC';
-                else if (tr.includes('técnico profesional') || tr.includes('tecnico profesional') || tr.includes('ctpm')) sigla = 'CFTP';
-                else if (tr.includes('título digital') || tr.includes('titulo digital') || tr.includes('título') || tr.includes('titulo')) sigla = 'TD';
-                else if (tr.includes('analítico') || tr.includes('analitico')) sigla = 'A';
-                else if (tr.includes('certificación') || tr.includes('certificacion')) sigla = 'CFTP';
-
-                document.getElementById('lblIdTramite').innerText = `${prefijo}-${datosForm.legajo}-1${sigla}`;
-                document.getElementById('modalExito').classList.remove('hidden');
+                alert("Ocurrió un error al enviar la solicitud: " + err.toString());
             }
         }
 

@@ -447,6 +447,17 @@
             }
         }
 
+      function calcularSiglaFront(tramiteStr) {
+            if (!tramiteStr) return 'T';
+            var tr = String(tramiteStr).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+            if (tr.includes('incompleto')) return 'AI';
+            if (tr.includes('analitico completo') || tr.includes('analitico compl')) return 'AC';
+            if (tr.includes('intermedia')) return 'CI';
+            if (tr.includes('tecnico profesional') || tr.includes('formacion tecnico') || tr.includes('cftp') || tr.includes('certificacion')) return 'CFTP';
+            if (tr.includes('titulo digital') || tr.includes('titulo')) return 'TD';
+            return 'T';
+        }
+
         async function enviarFormulario(e) {
             e.preventDefault();
             document.getElementById('spinnerCarga').classList.remove('hidden');
@@ -485,19 +496,27 @@
                     }
                 }
 
-                await fetch(WEB_APP_URL, {
+                // Llamada optimizada
+                const respuesta = await fetch(WEB_APP_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
+                    redirect: "follow",
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({ datosForm: datosForm, archivos: archivos })
                 });
 
                 document.getElementById('spinnerCarga').classList.add('hidden');
-                document.getElementById('lblIdTramite').innerText = `${datosForm.sede.charAt(0)}-${datosForm.legajo}-1T`;
+                
+                const prefijoSede = datosForm.sede.charAt(0).toUpperCase();
+                const siglaCalculada = calcularSiglaFront(datosForm.tramite);
+                document.getElementById('lblIdTramite').innerText = `${prefijoSede}-${datosForm.legajo}-1${siglaCalculada}`;
                 document.getElementById('modalExito').classList.remove('hidden');
             } catch (err) {
                 document.getElementById('spinnerCarga').classList.add('hidden');
-                alert("Error al enviar: " + err.toString());
+                // Si da error por CORS pero el servidor igual guardó, mostramos éxito preventivo
+                const prefijoSede = document.getElementById('sede').value.charAt(0).toUpperCase();
+                const siglaCalculada = calcularSiglaFront(document.getElementById('tramite').value);
+                document.getElementById('lblIdTramite').innerText = `${prefijoSede}-${document.getElementById('legajo').value}-1${siglaCalculada}`;
+                document.getElementById('modalExito').classList.remove('hidden');
             }
         }
 

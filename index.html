@@ -39,24 +39,22 @@
                         <input type="text" id="cuil" required maxlength="11" minlength="11" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 20123456789" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
                     </div>
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">N° de Legajo (5 dígitos) *</label>
-                        <input type="text" id="legajo" required maxlength="5" minlength="5" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 12345" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Tipo de Documento *</label>
+                        <select id="tipoDoc" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                            <option value="">Seleccionar...</option>
+                            <option value="DNI">DNI</option>
+                            <option value="DNI Extranjero">DNI EXTRANJERO</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Tipo de Documento *</label>
-                        <select id="tipoDoc" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Seleccionar...</option>
-                            <option value="DNI">DNI</option>
-                            <option value="Pasaporte">PASAPORTE</option>
-                            <option value="Cédula">CÉDULA</option>
-                        </select>
-                    </div>
-                    <div>
                         <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Número de Documento (7 u 8 dígitos) *</label>
                         <input type="text" id="documento" required maxlength="8" minlength="7" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 35123456" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                    </div>
+                    <div>
+                        <!-- Espacio reservado para equilibrar grilla -->
                     </div>
                 </div>
 
@@ -129,71 +127,90 @@
                 </div>
             </div>
 
-            <!-- DATOS DEL TRÁMITE Y ACADÉMICOS -->
+            <!-- BLOQUE DINÁMICO SEPARADO Y ORDENADO -->
             <div id="bloqueTramite" class="space-y-6 pt-6 border-t-2 border-slate-100 opacity-50 pointer-events-none transition-all duration-300">
-                <h2 class="text-xl font-extrabold text-slate-800 border-b-2 border-indigo-100 pb-3 flex items-center gap-3">
-                    <i class="fa-solid fa-graduation-cap text-indigo-600 text-2xl"></i> Elección de Sede, Trámite y Datos Académicos
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Sede *</label>
-                        <select id="sede" required onchange="actualizarCarrerasDinamicas(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Cargando Sedes...</option>
-                        </select>
+                
+                <!-- 1. DATOS ACADÉMICOS -->
+                <div class="space-y-4">
+                    <h2 class="text-xl font-extrabold text-slate-800 border-b-2 border-indigo-100 pb-3 flex items-center gap-3">
+                        <i class="fa-solid id-card text-indigo-600 text-2xl"></i> Datos Académicos
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">N° de Legajo (5 dígitos) *</label>
+                            <input type="text" id="legajo" required maxlength="5" minlength="5" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 12345" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Año de Ingreso *</label>
+                            <input type="text" id="anioIngreso" required maxlength="4" minlength="4" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 2020" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
+                        </div>
                     </div>
-
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Carrera *</label>
-                        <select id="carrera" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Seleccionar Sede primero...</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Trámite a Solicitar *</label>
-                        <select id="tramite" required onchange="actualizarOpcionesDocumentacion(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Cargando Trámites...</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Tipo de Emisión *</label>
-                        <select id="tipoTramite" required onchange="actualizarOpcionesDocumentacion(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Seleccionar Tipo...</option>
-                            <option value="ORIGINAL">ORIGINAL</option>
-                            <option value="DUPLICADO">DUPLICADO</option>
-                            <option value="TRIPLICADO">TRIPLICADO</option>
-                        </select>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Ingresó con Estudios *</label>
+                            <select id="ingresoEstudios" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                                <option value="">Seleccionar...</option>
+                                <option value="Secundario Completo">Secundario Completo</option>
+                                <option value="Mayor de 25 c/ Sec. Incompleto">Mayor de 25 c/ Sec. Incompleto</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Otros Estudios *</label>
+                            <select id="otrosEstudios" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                                <option value="Ninguno">Ninguno</option>
+                                <option value="Terciario Incompleto">Terciario Incompleto</option>
+                                <option value="Terciario Completo">Terciario Completo</option>
+                                <option value="Universitario Incompleto">Universitario Incompleto</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <!-- NUEVOS CAMPOS ACADÉMICOS COMPLETADOS POR EL ALUMNO -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Año de Ingreso *</label>
-                        <input type="text" id="anioIngreso" required maxlength="4" minlength="4" inputmode="numeric" oninput="validarSoloNumeros(this); validarFlujoProgresivo();" placeholder="EJ: 2020" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Ingresó con Estudios *</label>
-                        <select id="ingresoEstudios" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="">Seleccionar...</option>
-                            <option value="Secundario Completo">Secundario Completo</option>
-                            <option value="Mayor de 25 c/ Sec. Incompleto">Mayor de 25 c/ Sec. Incompleto</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Otros Estudios *</label>
-                        <select id="otrosEstudios" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
-                            <option value="Ninguno">Ninguno</option>
-                            <option value="Terciario Incompleto">Terciario Incompleto</option>
-                            <option value="Terciario Completo">Terciario Completo</option>
-                            <option value="Universitario Incompleto">Universitario Incompleto</option>
-                        </select>
+                <!-- 2. SEDE -->
+                <div class="space-y-4 pt-4">
+                    <h2 class="text-xl font-extrabold text-slate-800 border-b-2 border-indigo-100 pb-3 flex items-center gap-3">
+                        <i class="fa-solid fa-building-columns text-indigo-600 text-2xl"></i> Sede
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Sede *</label>
+                            <select id="sede" required onchange="actualizarCarrerasDinamicas(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                                <option value="">Cargando Sedes...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Carrera *</label>
+                            <select id="carrera" required onchange="validarFlujoProgresivo()" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                                <option value="">Seleccionar Sede primero...</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
+
+                <!-- 3. TRÁMITE -->
+                <div class="space-y-4 pt-4">
+                    <h2 class="text-xl font-extrabold text-slate-800 border-b-2 border-indigo-100 pb-3 flex items-center gap-3">
+                        <i class="fa-solid fa-file-lines text-indigo-600 text-2xl"></i> Trámite
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Trámite a Solicitar *</label>
+                            <select id="tramite" required onchange="actualizarOpcionesDocumentacion(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                                <option value="">Cargando Trámites...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs md:text-sm font-bold uppercase tracking-wider text-slate-700 mb-2">Tipo de Emisión *</label>
+                            <select id="tipoTramite" required onchange="actualizarOpcionesDocumentacion(); validarFlujoProgresivo();" class="w-full p-3.5 text-base md:text-lg border-2 border-slate-300 rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 outline-none transition bg-white">
+                                <option value="">Seleccionar Tipo...</option>
+                                <option value="ORIGINAL">ORIGINAL</option>
+                                <option value="DUPLICADO">DUPLICADO</option>
+                                <option value="TRIPLICADO">TRIPLICADO</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- ADJUNTAR DOCUMENTACIÓN -->
@@ -241,7 +258,7 @@
     </div>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwhJbE39wbPlHZf4uT3HqbUPJlTWuSDh7U8_Qdbk6s7i-T_l5Qo42S8Bugf1SHH3423Gw/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/TU_URL_DE_APPS_SCRIPT_AQUI/exec";
         
         let datosConfiguracionGlobal = { carreras: [], sedes: [], tramites: [] };
         let archivosValidados = {};
@@ -328,7 +345,6 @@
 
         function validarFlujoProgresivo() {
             const cuil = document.getElementById('cuil').value.trim();
-            const legajo = document.getElementById('legajo').value.trim();
             const tipoDoc = document.getElementById('tipoDoc').value;
             const documento = document.getElementById('documento').value.trim();
             const apellido = document.getElementById('apellido').value.trim();
@@ -340,17 +356,14 @@
             const nacionalidad = document.getElementById('nacionalidad').value.trim();
             const emailValido = validarCoincidenciaEmail();
             const telefono = document.getElementById('telefono').value.trim();
-            const anioIngreso = document.getElementById('anioIngreso').value.trim();
-            const ingresoEstudios = document.getElementById('ingresoEstudios').value;
-            const otrosEstudios = document.getElementById('otrosEstudios').value;
 
-            const datosCompletos = cuil.length === 11 && legajo.length === 5 && tipoDoc !== "" && documento.length >= 7 && 
-                                   apellido !== "" && nombres !== "" && genero !== "" && fechaNac !== "" && lugarNac !== "" && 
-                                   provincia !== "" && nacionalidad !== "" && emailValido && telefono.length === 10 &&
-                                   anioIngreso.length === 4 && ingresoEstudios !== "" && otrosEstudios !== "";
+            const datosPersonalesCompletos = cuil.length === 11 && tipoDoc !== "" && documento.length >= 7 && 
+                                             apellido !== "" && nombres !== "" && genero !== "" && fechaNac !== "" && 
+                                             lugarNac !== "" && provincia !== "" && nacionalidad !== "" && 
+                                             emailValido && telefono.length === 10;
 
             const bloqueTramite = document.getElementById('bloqueTramite');
-            if (datosCompletos) {
+            if (datosPersonalesCompletos) {
                 bloqueTramite.classList.remove('opacity-50', 'pointer-events-none');
             } else {
                 bloqueTramite.classList.add('opacity-50', 'pointer-events-none');
@@ -413,10 +426,19 @@
 
         function evaluarEstadoBotonEnviar() {
             const btn = document.getElementById('btnEnviar');
-            const totalCampos = Object.keys(archivosValidados).length;
-            const todosValidos = totalCampos > 0 && Object.values(archivosValidados).every(val => val === true);
+            const legajo = document.getElementById('legajo').value.trim();
+            const anio = document.getElementById('anioIngreso').value.trim();
+            const ing = document.getElementById('ingresoEstudios').value;
+            const sede = document.getElementById('sede').value;
+            const carrera = document.getElementById('carrera').value;
+            const tramite = document.getElementById('tramite').value;
+            const tipoT = document.getElementById('tipoTramite').value;
 
-            if (todosValidos) {
+            const datosCompletosExtra = legajo.length === 5 && anio.length === 4 && ing !== "" && sede !== "" && carrera !== "" && tramite !== "" && tipoT !== "";
+            const totalCampos = Object.keys(archivosValidados).length;
+            const todosArchivosValidos = totalCampos > 0 && Object.values(archivosValidados).every(val => val === true);
+
+            if (datosCompletosExtra && todosArchivosValidos) {
                 btn.disabled = false;
                 btn.className = "w-full py-4 text-lg bg-indigo-600 text-white font-extrabold rounded-2xl shadow-xl hover:bg-indigo-700 cursor-pointer";
             } else {
